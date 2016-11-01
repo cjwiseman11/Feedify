@@ -1,0 +1,140 @@
+body {
+	background: #e2e2e2;
+}
+
+#home, #home a, #home a:hover {
+    color: #00b1c1;
+    font-family: 'Comfortaa', cursive;
+}
+
+#footer-section {
+	padding: 2em 1em 0 1em;
+	background: #f7f7f7;
+	margin-bottom: 1em;
+}
+
+#news-feedjson > div.article-container {
+  padding: 1%;
+  border-bottom: 1px solid #00b1c1;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  background: #fff;
+}
+
+#first-time {
+    border: 1px solid #da0d0d;
+    background: #fff0f0;
+    display: none;
+}
+
+#feed-section {
+	border-top: 1px solid #d3d3d3;
+	background: #f7f7f7;
+}
+
+/*.new-post {
+    border-top: 1px solid orange;
+    z-index: -1;
+}
+
+#feed-section h2, #feed-section small {
+    color: #fff    
+}
+
+#feed-section a {
+    color: #a7e2ff;
+}*/
+
+
+.vcenter{
+	vertical-align: middle;
+	float: none;
+	display: inline-block;
+	}
+	
+.row-center{
+	display: block;
+	}
+	
+@media (min-width: 768px) { 
+    .row-center {
+        display: flex;
+		align-items: center;
+    }
+}
+
+#news-feedjson > div > div.image {
+	width: 185px;
+	height: 90px;
+	overflow:hidden;
+}
+
+.dont-break-out {
+
+  /* These are technically the same, but use both */
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+
+  -ms-word-break: break-all;
+  /* This is the dangerous one in WebKit, as it breaks things wherever */
+  word-break: break-all;
+  /* Instead use this non-standard one: */
+  word-break: break-word;
+
+  /* Adds a hyphen where the word breaks, if supported (No Blink) */
+  -ms-hyphens: auto;
+  -moz-hyphens: auto;
+  -webkit-hyphens: auto;
+  hyphens: auto;
+
+}
+
+#feedlist{
+    display:none;
+    padding: 2em;
+}
+
+a#randomify {
+    background: #00b1c1;
+    color: #fff;
+    font-family: 'Comfortaa', cursive;
+    font-weight: 700;
+}
+
+a#randomify:hover {
+    color: #000;
+    border-color: #ccc;
+}
+/*#checkfeedlist {
+background:#FFF;
+position:relative;
+height:30px;
+line-height:27px;
+display:block;
+border:1px solid #dadada;
+margin: 1em 0 0 0;
+text-align:center;
+}
+#feedlist {
+z-index: 99;
+background: none repeat scroll 0 0 #EEEEEE;
+border: 1px solid #DADADA;
+color: #333333;
+width:100%;
+height: 0;
+overflow:hidden;
+left: 0;
+line-height: 20px;
+position: absolute;
+top: 30px;
+-webkit-transition: all .3s ease;
+-moz-transition: all .3s ease;
+-ms-transition: all .3s ease;
+-o-transition: all .3s ease;
+transition: all .3s ease;
+}
+#checkfeedlist:hover > #feedlist {
+display:block;
+left:0px;
+height:auto;
+}*/
