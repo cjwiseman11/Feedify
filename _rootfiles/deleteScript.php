@@ -13,11 +13,15 @@ mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($con
 
 $getrows = "SELECT imgSrc FROM posts WHERE date <= (NOW() - INTERVAL 1 MONTH) AND archived = 0";
 $result = mysqli_query($connection, $getrows) or die("Error in Selecting " . mysqli_error($connection));
+$deleted = 0;
 
 while($row = mysqli_fetch_assoc($result)){
+    $deleted++;
     if(unlink($root . "/feedify/thumbnails/full/" . $row['imgSrc']))
         echo "File Deleted.";
 }
+
+echo "Successfully archived $deleted assets";
 
 //close the db connection
 mysqli_close($connection);
