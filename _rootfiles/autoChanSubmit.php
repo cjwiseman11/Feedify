@@ -133,12 +133,9 @@ while ($row = mysqli_fetch_array($feedQuery)){
 		print "got NFID: $newsfeedid<br>\n";
 		$upTit = mysqli_real_escape_string($connection, $upTit);
 		$Desc = mysqli_real_escape_string($connection, $Desc);
-
-        $reddit_to_array = simplexml_load_file("https://www.reddit.com/submit.rss?url=" . $setLink);
-        $redditlink = $reddit_to_array->entry->link['href'];
         
-		$result = mysqli_query($connection,"INSERT INTO posts (title, link, metDesc, type, feedsrc, pubDate, imgSrc, channels, newsfeedid, redditlink)
-		VALUES ('$upTit', '$setLink', '$Desc', 'auto', '$feed', '$autoDate', '', '$chickendipper', '$newsfeedid', '$redditlink')");
+		$result = mysqli_query($connection,"INSERT INTO posts (title, link, metDesc, type, feedsrc, pubDate, imgSrc, channels, newsfeedid)
+		VALUES ('$upTit', '$setLink', '$Desc', 'auto', '$feed', '$autoDate', '', '$chickendipper', '$newsfeedid')");
 		
 		if($ogImage == !null){
 			$info = getimagesize($ogImage);

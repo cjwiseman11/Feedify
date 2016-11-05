@@ -62,6 +62,13 @@ while($row = mysqli_fetch_assoc($result))
    } else {
         $imgcode = '<a href="thumbnails/full/' . $row["imgSrc"] .'" target="_blank" class="thumbnail"><img src="thumbnails/'. $row["imgSrc"] .'" class="img-responsive article-image"></a>';
     };
+    
+    if($row["redditlink"] != ""){
+        $redditcode = ' | <a href="' . $row["redditlink"] . '">Reddit Comments</a>';
+    } else {
+        $redditcode = '';
+    };
+    
 	echo '<div id="'. $row["id"] .'" class="article-container container-fluid row-center dont-break-out row">
 			<div class="image col-sm-2 col-xs-12">
 			' . $imgcode . '
@@ -81,7 +88,7 @@ while($row = mysqli_fetch_assoc($result))
 			<p>' . $row["feedsrc"] . '</p>
 			</div>
 			<div class="feedshare">
-				<a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>
+				<a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
 			</div>
 		</div>
 	</div>';
