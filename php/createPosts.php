@@ -68,7 +68,7 @@ while($row = mysqli_fetch_assoc($result))
 			</div>
 		<div class="article-wrapper container col-sm-10 col-xs-12">
 			<div class="title">
-				<h3><a href="'. $row["link"] .'" onclick="trackOutboundLink(\''.$row["link"].'\') class="articlelink '. $row["id"] .'">'. $row["title"] .'</a></h3>
+				<h3><a href="'. $row["link"] .'" onclick="trackOutboundLink(\''.$row["link"].'\')" class="articlelink '. $row["id"] .'">'. $row["title"] .'</a></h3>
 			</div>
 			<div class="description">
 				<h4>'. $row["metDesc"] .'</h4>
