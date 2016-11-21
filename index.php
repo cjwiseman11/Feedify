@@ -1,4 +1,4 @@
-<?php if (substr_count($_SERVER[‘HTTP_ACCEPT_ENCODING’], ‘gzip’)) ob_start(“ob_gzhandler”); else ob_start(); ?>
+<?php if (substr_count($_SERVER[‘HTTP_ACCEPT_ENCODING’], ‘gzip’)) ob_start(“ob_gzhandler”); else ob_start(); session_start(); ?>
 <!doctype php>
 <html lang="en">
 <head>
@@ -78,6 +78,30 @@ $('#randomify').click(function(){
 	</script>
   </head>
 <body>
+<div id="member-area">
+    <?php
+    
+        if(!isset($_SESSION['feedifyusername'])): ?> 
+           <div id="member-login">
+                <form class="form-inline" method="post" action="php/checklogin.php">
+                    <div class="form-group">
+                        <label for="username">Name</label>
+                        <input name="username" type="text" class="form-control" id="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input name="password" type="password" class="form-control" id="password" placeholder="Password">
+                    </div>
+                    <button type="submit" class="btn btn-default">Login</button>
+                </form>
+            </div> 
+        <?php else : ?>
+            <div id="member-loggedin">
+                <p>Hello <?php echo $_SESSION['feedifyusername']; ?> <a href="php/logout.php">Logout</a></p>
+            </div>
+    <?php endif; ?>
+
+</div>
 <div id="main-wrapper" class="container">
 	<div class="row">
 		<div id="heading-section" class="text-center">
