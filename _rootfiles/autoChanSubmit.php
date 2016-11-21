@@ -133,6 +133,7 @@ while ($row = mysqli_fetch_array($feedQuery)){
 		print "got NFID: $newsfeedid<br>\n";
 		$upTit = mysqli_real_escape_string($connection, $upTit);
 		$Desc = mysqli_real_escape_string($connection, $Desc);
+        
 		$result = mysqli_query($connection,"INSERT INTO posts (title, link, metDesc, type, feedsrc, pubDate, imgSrc, channels, newsfeedid)
 		VALUES ('$upTit', '$setLink', '$Desc', 'auto', '$feed', '$autoDate', '', '$chickendipper', '$newsfeedid')");
 		
