@@ -34,13 +34,12 @@ if($limit > 20){
 
 $offset = ($page - 1) * $limit;
 
-
-if($chan == "all")
+if (isset($id)){
+	$sql = "SELECT * FROM `posts` WHERE id = $id";
+}
+else if($chan == "all")
 {
 	$sql = "select * from posts ORDER BY id DESC LIMIT $limit OFFSET $offset";
-} 
-else if ($id){
-	$sql = "SELECT * FROM `posts` WHERE id = $id";
 } else {
 	//$sql = "select * from posts WHERE channels = '$chan' ORDER BY id DESC";
 	$sql = "SELECT * FROM `posts` as c
