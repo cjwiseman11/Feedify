@@ -23,6 +23,18 @@ while($row = mysqli_fetch_assoc($result)){
 
 echo "Successfully archived $deleted assets";
 
+$getrows = "SELECT imgSrc FROM posts WHERE date <= (NOW() - INTERVAL 2 MONTH) AND date > (NOW() - INTERVAL 1 MONTH) AND archived = 0";
+$result = mysqli_query($connection, $getrows) or die("Error in Selecting " . mysqli_error($connection));
+$deleted = 0;
+
+while($row = mysqli_fetch_assoc($result)){
+    $deleted++;
+    if(unlink($root . "/feedify/thumbnails/" . $row['imgSrc']))
+        echo "File Deleted.";
+}
+
+echo "Successfully archived $deleted assets";
+
 //close the db connection
 mysqli_close($connection);
 ?>
