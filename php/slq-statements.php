@@ -39,3 +39,24 @@ function getPostsByChan($chan, $limit, $offset){
     return $row;
     
 }
+
+function getFullFeedList(){
+    $db = connectToDatabase();
+    $statement = $db->prepare("select * from newsfeeds");
+    $statement->execute();
+    $row = $statement->fetchAll();
+    return $row;    
+}
+
+function getFeedListForChan($chan){
+    $db = connectToDatabase();
+    $statement = $db->prepare("SELECT * FROM `newsfeeds` as c
+        INNER JOIN `channelfeed-links` AS m
+            ON m.newsfeedid = c.id
+        INNER JOIN `channels` as b
+            ON m.channelid = b.id
+        WHERE b.channame = :chan");
+    $statement->execute(array(':chan' => $chan));
+    $row = $statement->fetchAll();
+    return $row;
+}

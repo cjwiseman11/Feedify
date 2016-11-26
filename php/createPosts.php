@@ -1,7 +1,4 @@
 <?php
-
-include 'slq-statements.php';
-
 if($_GET['chan']){
     $chan = $_GET['chan'];
 } else {
