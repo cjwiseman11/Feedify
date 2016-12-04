@@ -10,7 +10,7 @@ function connectToDatabase(){
     return $db;
 }
 function getPostsById($id){
-    
+
     $db = connectToDatabase();
     $statement = $db->prepare("SELECT * FROM `posts` WHERE id = :id");
     $statement->execute(array(':id' => $id));
@@ -37,7 +37,7 @@ function getPostsByChan($chan, $limit, $offset){
     $statement->execute(array(':chan' => $chan, ':limit' => $limit, ':offset' => $offset ));
     $row = $statement->fetchAll();
     return $row;
-    
+
 }
 
 function getFullFeedList(){
@@ -45,7 +45,7 @@ function getFullFeedList(){
     $statement = $db->prepare("select * from newsfeeds");
     $statement->execute();
     $row = $statement->fetchAll();
-    return $row;    
+    return $row;
 }
 
 function getFeedListForChan($chan){
@@ -59,4 +59,14 @@ function getFeedListForChan($chan){
     $statement->execute(array(':chan' => $chan));
     $row = $statement->fetchAll();
     return $row;
+}
+
+function saveforlater($postid,$username){
+  $db = connectToDatabase();
+  $memberid = $db->prepare("SELECT id FROM `members` WHERE username = :username");
+  $memberid->execute(array(':username' => $username));
+  $memberidrow = $memberid->fetch();
+  $statement = $db->prepare("INSERT INTO `savedposts`(`memberid`, `postid`) VALUES (:memberid,:postid)");
+  $statement->execute(array(':memberid' => $memberidrow["id"], ':postid' => $postid));
+  //$row = $statement->fetchAll();
 }

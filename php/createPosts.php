@@ -66,8 +66,8 @@ foreach($row as $row)
 			<div class="feedsrc small">
 			<p>' . $row["feedsrc"] . '</p>
 			</div>
-			<div class="feedshare">
-				<a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
+			<div class="social">
+				<a href="" class="save-for-later">Save for later</a> | <a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
 			</div>
 		</div>
 	</div>';
