@@ -61,12 +61,31 @@ function getFeedListForChan($chan){
     return $row;
 }
 
-function saveforlater($postid,$username){
+function getMemberID($username){
   $db = connectToDatabase();
   $memberid = $db->prepare("SELECT id FROM `members` WHERE username = :username");
   $memberid->execute(array(':username' => $username));
   $memberidrow = $memberid->fetch();
+  return $memberidrow;
+}
+
+function saveforlater($postid,$username){
+  $db = connectToDatabase();
+  $memberidrow = getMemberId($username);
   $statement = $db->prepare("INSERT INTO `savedposts`(`memberid`, `postid`) VALUES (:memberid,:postid)");
   $statement->execute(array(':memberid' => $memberidrow["id"], ':postid' => $postid));
   //$row = $statement->fetchAll();
+}
+
+function getSavedPosts($username){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM `posts` as c
+        INNER JOIN `savedposts` AS m
+            ON m.postid = c.id
+        INNER JOIN `members` as b
+            ON m.memberid = b.id
+        WHERE b.username = :username");
+  $statement->execute(array(':username' => $username));
+  $row = $statement->fetchAll();
+  return $row;
 }

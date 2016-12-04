@@ -180,7 +180,7 @@ $('#randomify').click(function(){
         </div>
         <!--This is where the feed will appear -->
         <div id="news-feedjson" class="col-sm-12">
-            <?php include('php/createPosts.php');?>
+            <?php include('php/createSavedPosts.php');?>
         </div>
         <!--End Feed-->
 
