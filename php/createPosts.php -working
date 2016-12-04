@@ -1,4 +1,14 @@
 <?php
+// Load configuration file outside of doc root
+$root = $_SERVER['DOCUMENT_ROOT'];
+$config = parse_ini_file($root . '/../config.ini'); 
+
+//Connecting to sql db.
+$connection = mysqli_connect("localhost",$config['username'],$config['password'],$config['dbname']);
+if($connection === false){
+	//TODO: Add error
+}
+
 if($_GET['chan']){
     $chan = $_GET['chan'];
 } else {
@@ -25,15 +35,25 @@ if($limit > 20){
 $offset = ($page - 1) * $limit;
 
 if ($id){
-    $row = getPostsById($id);
-}
-else if($chan == "all")
+	$sql = "SELECT * FROM `posts` WHERE id = $id";
+} else if($chan == "all")
 {
-    $row = getPostsByAll($limit, $offset);
-} else {
-    $row = getPostsByChan($chan, $limit, $offset);
+	$sql = "select * from posts ORDER BY id DESC LIMIT $limit OFFSET $offset";
+} 
+else {
+	//$sql = "select * from posts WHERE channels = '$chan' ORDER BY id DESC";
+	$sql = "SELECT * FROM `posts` as c
+		INNER JOIN `channelfeed-links` AS m
+			ON m.newsfeedid = c.newsfeedid
+		INNER JOIN `channels` as b
+			ON m.channelid = b.id
+		WHERE b.channame = '$chan'
+		ORDER BY c.id DESC
+		LIMIT $limit OFFSET $offset";
 }
-foreach($row as $row)
+//fetch table rows from mysql db
+$result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
+while($row = mysqli_fetch_assoc($result))
 {
     if($row["archived"] == 1){
         $imgcode = '<p class="text-center" style="position: absolute;color: #00b1c1;background: black;">Archived</p>
@@ -41,13 +61,13 @@ foreach($row as $row)
    } else {
         $imgcode = '<a href="thumbnails/full/' . $row["imgSrc"] .'" target="_blank" class="thumbnail"><img src="thumbnails/'. $row["imgSrc"] .'" class="img-responsive article-image"></a>';
     };
-
+    
     if($row["redditlink"] != ""){
         $redditcode = ' | <a href="' . $row["redditlink"] . '">Reddit Comments</a>';
     } else {
         $redditcode = '';
     };
-
+    
 	echo '<div id="'. $row["id"] .'" class="article-container container-fluid row-center dont-break-out row">
 			<div class="image col-sm-2 col-xs-12">
 			' . $imgcode . '
@@ -59,7 +79,7 @@ foreach($row as $row)
 			<div class="description">
 				<h4>'. $row["metDesc"] .'</h4>
 			</div>
-			<div class="date small">
+			<div class="date small"> 
 				<p>Date Posted:' . $row["date"] .'<br>
 				Post Date: ' . $row["pubDate"] .'</p>
 			</div>
@@ -72,4 +92,7 @@ foreach($row as $row)
 		</div>
 	</div>';
 }
+
+//close the db connection
+mysqli_close($connection);
 ?>
