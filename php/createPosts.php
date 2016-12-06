@@ -48,6 +48,12 @@ foreach($row as $row)
         $redditcode = '';
     };
 
+    if(isSavedPost($_SESSION['feedifyusername'],$row["id"])){
+      $savedPostCode = 'Saved Post';
+    } else {
+      $savedPostCode = '<a href="" class="save-for-later">Save for later</a>';
+    }
+
 	echo '<div id="'. $row["id"] .'" class="article-container container-fluid row-center dont-break-out row">
 			<div class="image col-sm-2 col-xs-12">
 			' . $imgcode . '
@@ -67,7 +73,7 @@ foreach($row as $row)
 			<p>' . $row["feedsrc"] . '</p>
 			</div>
 			<div class="social">
-				<a href="" class="save-for-later">Save for later</a> | <a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
+				' .$savedPostCode. ' | <a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
 			</div>
 		</div>
 	</div>';

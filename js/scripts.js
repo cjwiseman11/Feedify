@@ -27,9 +27,19 @@ $('#seefeedlist').click(function(){
 });
 
 //Save for later button
-$('.save-for-later').click(function(){
+$('.save-for-later').click(function(e){
+	e.preventDefault();
 	var id = $(this).parent().closest('div[id]').attr("id");
 	$.get("php/saveforlater.php?id=" + id);
+	$(this).after("Saved");
+	$(this).remove();
+});
+
+$('.remove-from-saved').click(function(e){
+	e.preventDefault();
+	var id = $(this).parent().closest('div[id]').attr("id");
+	$.get("php/removefromsaved.php?id=" + id);
+	$('#'+id).text("Removed");
 });
 
 //Random Button Logic

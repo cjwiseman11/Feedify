@@ -23,42 +23,6 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/feedifyQueryString.js"></script>
 	<script>
-	<?php
-		//Get current channel and save into variable
-        if($_GET['chan']){
-            $chan = $_GET['chan'];
-        } else {
-            $chan = "all";
-        }
-
-        if($_GET['lim']){
-            $lim = $_GET['lim'];
-        } else {
-            $lim = "10";
-        }
-
-        if($_GET['p']){
-            $page = $_GET['p'];
-        } else {
-            $page = "1";
-        }
-	?>
-
-        //Random Button Logic
-$('#randomify').click(function(){
-    var randomLink = "";
-    var oReq = new XMLHttpRequest(); //New request object
-    oReq.onload = function() {
-        randomLink = this.responseText; //Will alert: 42
-        window.location.href = JSON.parse(randomLink);
-    };
-    oReq.open("get", "php/randomArticle.php", true);
-    $(this).text('Loading...');
-    oReq.send();
-    return false;
-});
-	</script>
-	<script>
 		<!--FB Share Test-->
 		window.fbAsyncInit = function(){
 		FB.init({
@@ -108,9 +72,7 @@ $('#randomify').click(function(){
             </form>
     <?php else : ?>
         <div id="member-loggedin">
-            <p>Hello <?php echo $_SESSION['feedifyusername']; ?> <a href="php/logout.php">Logout</a>
-							<br>
-							<a href="">View saved posts</a>
+            <p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <strong>View saved posts</strong> | <a href="php/logout.php">Logout</a>
 						</p>
         </div>
     <?php endif; ?>
@@ -119,58 +81,11 @@ $('#randomify').click(function(){
 	<div class="row">
 		<div id="heading-section" class="text-center">
 			<h1 id="home"><a href="/feedify" title="home">Feedify</a><small> Beta</small></h1>
-			<div id="channel-list">
-				<?php include('php/createChannelsList.php');?>
-			</div>
 		</div>
 	</div>
-    <div class="row">
-        <div id="first-time" class="col-sm-12">
-            <div class="col-sm-11">
-                <h2>Welcome to Feedify. A simple RSS Feed.</h2>
-                <p>To create your very own channel, input the RSS feed into the "RSS URL" box below, and then add the channel name you'd like it to appear on and then click submit - that's it!</p>
-                <p>Feeds will get updated every 30 mins and all feeds will appear on the ALL channel</p>
-                <p>More features to come! Let me know if you want more stuff or you see any defects :) </p>
-            </div>
-            <div class="col-sm-1">
-                <a href="#" id="ft-close">Close</a>
-            </div>
-        </div>
-    </div>
 	<div class="row">
 		<div id="feed-section" class="col-sm-12">
-			<div id="control-section" class="col-sm-6">
-                <h2><small>Current Channel: <?php echo $chan ?> <a href="#" id="seefeedlist">(Feed list)</a></small></h2>
-				<p>Limit feed by: <a href="#" id="lim5">5</a> | <a href="#" id="lim10">10</a> | <a href="#" id="lim15">15</a> | <a href="#" id="lim20">20</a></p>
-				<p>Page: <?php echo $page; ?>
-				<p><?php
-					$nextpage = $page + 1;
-					$prevpage = $page - 1;
-					if($page == 1){
-						echo "<a href='?p=2&lim=$lim&chan=$chan'>Next Page ></a>";
-					} else if($page >1){
-						echo "<a href='?p=1&lim=$lim&chan=$chan'><< First</a> | <a href='?p=$prevpage&lim=$lim&chan=$chan'>< Previous</a> | <a href='?p=$nextpage&lim=$lim&chan=$chan'>Next ></a>";
-					}
-				?></p>
-			</div>
-			<div id="submit-section" class="col-sm-6">
-				<h2><small>Submit RSS:</small></h2>
-				<form action="php/send_feed_channel.php" method="post" onsubmit="return sendRSS();" class="form-inline">
-				<div class="form-group">
-					<input type="text" name="feed_link" class="form-control" id="feedLink" placeholder="RSS URL">
-				</div>
-				<div class="form-group">
-					<input type="text" name="feed_channel" class="form-control" value="<?php echo  $chan ?>" placeholder="Channel">
-				</div>
-				<input type="submit" class="btn btn-default">
-				<div class="alert alert-danger col-sm-12 hide" role="alert">
-				<p>You must submit an RSS feed.</p>
-				</div>
-				</form>
-				<br>
-                <a href="//RandomArticle" id="randomify" type="submit" class="btn btn-default">Random Article</a>
-                <br><br>
-			</div>
+      <h2>Saved Posts</h2>
 		</div>
         <div class="row">
             <div id="feedlist" class="col-sm-12">

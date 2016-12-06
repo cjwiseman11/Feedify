@@ -81,11 +81,30 @@ function getSavedPosts($username){
   $db = connectToDatabase();
   $statement = $db->prepare("SELECT * FROM `posts` as c
         INNER JOIN `savedposts` AS m
-            ON m.postid = c.id
+            ON c.id = m.postid
         INNER JOIN `members` as b
-            ON m.memberid = b.id
+            ON b.id = m.memberid
         WHERE b.username = :username");
   $statement->execute(array(':username' => $username));
   $row = $statement->fetchAll();
   return $row;
+}
+
+function isSavedPost($username, $postid){
+  $memberid = getMemberID($username);
+  $isSaved = false;
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM `savedposts` WHERE postid = :postid AND memberid = :memberid");
+  $statement->execute(array(':postid' => $postid, ':memberid' => $memberid["id"]));
+  if($statement->rowCount() > 0) {
+    $isSaved = true;
+  }
+  return $isSaved;
+}
+
+function removeSavedPost($username, $postid){
+  $memberid = getMemberID($username);
+  $db = connectToDatabase();
+  $statement = $db->prepare("DELETE FROM `savedposts` WHERE postid = :postid AND memberid = :memberid");
+  $statement->execute(array(':postid' => $postid, ':memberid' => $memberid["id"]));
 }
