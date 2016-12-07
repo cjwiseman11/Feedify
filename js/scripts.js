@@ -23,7 +23,23 @@ $('.articlelink').click(function(){
 
 //Toggle feed list in/out
 $('#seefeedlist').click(function(){
-   $('#feedlist').toggle(500); 
+   $('#feedlist').toggle(500);
+});
+
+//Save for later button
+$('.save-for-later').click(function(e){
+	e.preventDefault();
+	var id = $(this).parent().closest('div[id]').attr("id");
+	$.get("php/saveforlater.php?id=" + id);
+	$(this).after("Saved");
+	$(this).remove();
+});
+
+$('.remove-from-saved').click(function(e){
+	e.preventDefault();
+	var id = $(this).parent().closest('div[id]').attr("id");
+	$.get("php/removefromsaved.php?id=" + id);
+	$('#'+id).text("Removed");
 });
 
 //Random Button Logic
@@ -32,7 +48,7 @@ $('#randomify').click(function(){
     var oReq = new XMLHttpRequest(); //New request object
     oReq.onload = function() {
         randomLink = this.responseText; //Will alert: 42
-        window.location.href = JSON.parse(randomLink);  
+        window.location.href = JSON.parse(randomLink);
     };
     oReq.open("get", "php/randomArticle.php", true);
     $(this).text('Loading...');
@@ -42,9 +58,9 @@ $('#randomify').click(function(){
 
 //Check FirstTime Var
 $(document).ready(function(){
-    
+
     var firstTime = localStorage.getItem('firstTime');
-    
+
     if(firstTime === 'true' || firstTime === null){
         //Close button for FirstTime
         $('#ft-close').click(function(){
@@ -55,25 +71,21 @@ $(document).ready(function(){
     }
     //Get "last seen" post ID
     var lastSeenPostId = localStorage.getItem('lastSeenPostId');
-    
+
     //Get the latest post's ID
     var newsestPostId = $('div.article-container:first').attr("id");
-    
-    
+
+
     console.log("Newest Post: " + newsestPostId);
-    
+
     $('div.article-container').each(function(){
         if($(this).attr("id") > lastSeenPostId && lastSeenPostId !=null) {
             $(this).addClass("new-post");
         }
     });
-    
+
     localStorage.setItem('lastSeenPostId', newsestPostId);
     console.log("Last Seen Post: " + lastSeenPostId);
-    
+
 });
 //localStorage.removeItem('firstTime'); To Remove
-
-
-
-

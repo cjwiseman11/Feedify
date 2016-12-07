@@ -26,7 +26,7 @@ $offset = ($page - 1) * $limit;
 
 if ($id){
     $row = getPostsById($id);
-} 
+}
 else if($chan == "all")
 {
     $row = getPostsByAll($limit, $offset);
@@ -41,13 +41,21 @@ foreach($row as $row)
    } else {
         $imgcode = '<a href="thumbnails/full/' . $row["imgSrc"] .'" target="_blank" class="thumbnail"><img src="thumbnails/'. $row["imgSrc"] .'" class="img-responsive article-image"></a>';
     };
-    
+
     if($row["redditlink"] != ""){
         $redditcode = ' | <a href="' . $row["redditlink"] . '">Reddit Comments</a>';
     } else {
         $redditcode = '';
     };
     
+    if(!isset($_SESSION['feedifyusername'])){  
+      $savedPostCode = "";
+    } else if(isSavedPost($_SESSION['feedifyusername'],$row["id"])){
+      $savedPostCode = 'Saved Post | ';
+    } else {
+      $savedPostCode = '<a href="" class="save-for-later">Save for later</a> | ';
+    }
+
 	echo '<div id="'. $row["id"] .'" class="article-container container-fluid row-center dont-break-out row">
 			<div class="image col-sm-2 col-xs-12">
 			' . $imgcode . '
@@ -59,15 +67,15 @@ foreach($row as $row)
 			<div class="description">
 				<h4>'. $row["metDesc"] .'</h4>
 			</div>
-			<div class="date small"> 
+			<div class="date small">
 				<p>Date Posted:' . $row["date"] .'<br>
 				Post Date: ' . $row["pubDate"] .'</p>
 			</div>
 			<div class="feedsrc small">
 			<p>' . $row["feedsrc"] . '</p>
 			</div>
-			<div class="feedshare">
-				<a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
+			<div class="social">
+				' .$savedPostCode. '<a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
 			</div>
 		</div>
 	</div>';
