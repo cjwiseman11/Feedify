@@ -47,11 +47,13 @@ foreach($row as $row)
     } else {
         $redditcode = '';
     };
-
-    if(isSavedPost($_SESSION['feedifyusername'],$row["id"])){
-      $savedPostCode = 'Saved Post';
+    
+    if(!isset($_SESSION['feedifyusername'])){  
+      $savedPostCode = "";
+    } else if(isSavedPost($_SESSION['feedifyusername'],$row["id"])){
+      $savedPostCode = 'Saved Post | ';
     } else {
-      $savedPostCode = '<a href="" class="save-for-later">Save for later</a>';
+      $savedPostCode = '<a href="" class="save-for-later">Save for later</a> | ';
     }
 
 	echo '<div id="'. $row["id"] .'" class="article-container container-fluid row-center dont-break-out row">
@@ -73,7 +75,7 @@ foreach($row as $row)
 			<p>' . $row["feedsrc"] . '</p>
 			</div>
 			<div class="social">
-				' .$savedPostCode. ' | <a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
+				' .$savedPostCode. '<a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
 			</div>
 		</div>
 	</div>';
