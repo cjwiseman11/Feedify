@@ -47,8 +47,8 @@ foreach($row as $row)
     } else {
         $redditcode = '';
     };
-    
-    if(!isset($_SESSION['feedifyusername'])){  
+
+    if(!isset($_SESSION['feedifyusername'])){
       $savedPostCode = "";
     } else if(isSavedPost($_SESSION['feedifyusername'],$row["id"])){
       $savedPostCode = 'Saved Post | ';

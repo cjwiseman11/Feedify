@@ -56,6 +56,12 @@ $('#randomify').click(function(){
     return false;
 });
 
+//Login click
+$('.login-btn').on("click", function(){
+	$('#member-login > form').toggleClass('hidden-sm hidden-xs');
+	$(this).text($('#member-login > form').hasClass("hidden-sm") ? "Login" : "Close");
+});
+
 //Check FirstTime Var
 $(document).ready(function(){
 
