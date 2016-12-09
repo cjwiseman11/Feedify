@@ -96,7 +96,7 @@ $('#randomify').click(function(){
 <?php
     if(!isset($_SESSION['feedifyusername'])): ?>
 						<a class="btn btn-default visible-sm visible-xs col-xs-4 col-xs-offset-8 col-sm-3 col-sm-offset-9 login-btn">Log in</a>
-            <form class="form-inline form-group-sm hidden-sm hidden-xs" method="post" action="php/checklogin.php?page=index.php">
+            <form class="form-inline form-group-sm hidden-sm hidden-xs" method="post" action="php/checklogin.php">
                 <div class="form-group">
                     <label for="username">Name</label>
                     <input name="username" type="text" class="form-control" id="username" placeholder="Username">
@@ -109,7 +109,7 @@ $('#randomify').click(function(){
             </form>
     <?php else : ?>
         <div id="member-loggedin">
-            <p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <a href="saved-posts.php">View saved posts</a> | <a href="php/logout.php?page=index.php">Logout</a>
+            <p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <a href="saved-posts.php">View saved posts</a> | <a href="php/logout.php">Logout</a>
 						</p>
         </div>
     <?php endif; ?>
