@@ -26,7 +26,7 @@ function getPostsByAll($limit, $offset){
 }
 function getPostsByChan($chan, $limit, $offset){
     $db = connectToDatabase();
-    $statement = $db->prepare("SELECT * FROM `posts` as c
+    $statement = $db->prepare("SELECT c.* FROM `posts` as c
         INNER JOIN `channelfeed-links` AS m
             ON m.newsfeedid = c.newsfeedid
         INNER JOIN `channels` as b
@@ -37,7 +37,6 @@ function getPostsByChan($chan, $limit, $offset){
     $statement->execute(array(':chan' => $chan, ':limit' => $limit, ':offset' => $offset ));
     $row = $statement->fetchAll();
     return $row;
-
 }
 
 function getFullFeedList(){
@@ -50,7 +49,7 @@ function getFullFeedList(){
 
 function getFeedListForChan($chan){
     $db = connectToDatabase();
-    $statement = $db->prepare("SELECT * FROM `newsfeeds` as c
+    $statement = $db->prepare("SELECT c.* FROM `newsfeeds` as c
         INNER JOIN `channelfeed-links` AS m
             ON m.newsfeedid = c.id
         INNER JOIN `channels` as b
@@ -79,7 +78,7 @@ function saveforlater($postid,$username){
 
 function getSavedPosts($username){
   $db = connectToDatabase();
-  $statement = $db->prepare("SELECT * FROM `posts` as c
+  $statement = $db->prepare("SELECT c.* FROM `posts` as c
         INNER JOIN `savedposts` AS m
             ON c.id = m.postid
         INNER JOIN `members` as b
