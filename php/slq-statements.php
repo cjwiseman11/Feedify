@@ -107,3 +107,22 @@ function removeSavedPost($username, $postid){
   $statement = $db->prepare("DELETE FROM `savedposts` WHERE postid = :postid AND memberid = :memberid");
   $statement->execute(array(':postid' => $postid, ':memberid' => $memberid["id"]));
 }
+
+function registerUser($username, $password, $email){
+  $hash = crypt($password);
+  $db = connectToDatabase();
+  $statement = $db->prepare("INSERT INTO `members`(`username`,`password`,`email`) VALUES (:username, :password, :email)");
+  $statement->execute(array(':username' => $username, ':password' => $hash, ':email' => $email));
+}
+
+function userExists($username, $email){
+  $db = connectToDatabase();
+  $statement = $db->prepare("  SELECT * FROM `members` WHERE username = :username OR email = :email");
+  $statement->execute(array(':username' => $username, ':email' => $email));
+  if($statement->rowCount() > 0) {
+    $isUser = true;
+  } else {
+    $isUser = false;
+  }
+  return $isUser;
+}

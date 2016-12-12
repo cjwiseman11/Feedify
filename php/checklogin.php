@@ -31,7 +31,6 @@ if($count==1){
     // Register $myusername, $mypassword and redirect to file "login_success.php"
     session_start();
     $_SESSION["feedifyusername"] = $username;
-    $_SESSION["feedifypassword"] = $password;
     header("location: ../" . $_GET['page']);
 } else {
     echo "Wrong Username or Password";
