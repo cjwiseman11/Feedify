@@ -18,7 +18,7 @@ $password = stripslashes($_POST['password']);
 $username = mysqli_real_escape_string($connection,$username);
 $password = mysqli_real_escape_string($connection,$password);
 
-$sql = "SELECT * FROM `members` WHERE username='$username' and password='$password'";
+$sql = "SELECT * FROM `members` WHERE username='$username' and BINARY password='$password'";
 
 $result = mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 
