@@ -59,7 +59,7 @@
 <div id="member-login" class="text-right container">
 <?php
     if(!isset($_SESSION['feedifyusername'])): ?>
-            <form class="form-inline form-group-sm" method="post" action="php/checklogin.php">
+            <form class="form-inline form-group-sm" method="post" action="php/checklogin.php?page=saved-posts.php">
                 <div class="form-group">
                     <label for="username">Name</label>
                     <input name="username" type="text" class="form-control" id="username" placeholder="Username">
@@ -72,7 +72,7 @@
             </form>
     <?php else : ?>
         <div id="member-loggedin">
-            <p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <a href="index.php">Home<a/> | <a href="php/logout.php">Logout</a>
+            <p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <a href="index.php">Home<a/> | <a href="php/logout.php?page=saved-posts.php">Logout</a>
 						</p>
         </div>
     <?php endif; ?>

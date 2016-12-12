@@ -38,7 +38,7 @@ body {
 }
 
 #feed-section h2, #feed-section small {
-    color: #fff    
+    color: #fff
 }
 
 #feed-section a {
@@ -51,12 +51,12 @@ body {
 	float: none;
 	display: inline-block;
 	}
-	
+
 .row-center{
 	display: block;
 	}
-	
-@media (min-width: 768px) { 
+
+@media (min-width: 768px) {
     .row-center {
         display: flex;
 		align-items: center;
@@ -138,3 +138,15 @@ display:block;
 left:0px;
 height:auto;
 }*/
+
+@media only screen and (max-width : 768px) {
+	#member-login > form {
+		display: none;
+	}
+}
+
+@media only screen and (min-width : 769px) {
+	.login-btn {
+		display: none;
+	}
+}

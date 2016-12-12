@@ -56,6 +56,19 @@ $('#randomify').click(function(){
     return false;
 });
 
+//Login click
+$('.login-btn').on("click", function(){
+	//$('#member-login > form').toggleClass('hidden-sm hidden-xs');
+	//	$(this).text($('#member-login > form').hasClass("hidden-sm") ? "Login" : "Close");
+	if($('#member-login > form').css('display') == 'none'){
+		$('.login-btn').text("Close");
+		$('#member-login > form').show();
+	} else if($('#member-login > form').css('display') == 'block'){
+		$('.login-btn').text("Log in");
+		$('#member-login > form').hide();
+	}
+	//$('#member-login > form').slideToggle(300);
+});
 //Check FirstTime Var
 $(document).ready(function(){
 
