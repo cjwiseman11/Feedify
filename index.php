@@ -95,8 +95,8 @@ $('#randomify').click(function(){
 <div id="member-login" class="text-right container">
 <?php
     if(!isset($_SESSION['feedifyusername'])): ?>
-						<a class="btn btn-default visible-sm visible-xs col-xs-4 col-xs-offset-8 col-sm-3 col-sm-offset-9 login-btn">Log in</a>
-            <form class="form-inline form-group-sm hidden-sm hidden-xs" method="post" action="php/checklogin.php">
+						<a class="btn btn-default col-xs-4 col-xs-offset-8 col-sm-3 col-sm-offset-9 login-btn">Log in</a>
+            <form class="form-inline form-group-sm" method="post" action="php/checklogin.php">
                 <div class="form-group">
                     <label for="username">Name</label>
                     <input name="username" type="text" class="form-control" id="username" placeholder="Username">
