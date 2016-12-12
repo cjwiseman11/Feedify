@@ -105,48 +105,23 @@ a#randomify:hover {
     color: #000;
     border-color: #ccc;
 }
-/*#checkfeedlist {
-background:#FFF;
-position:relative;
-height:30px;
-line-height:27px;
-display:block;
-border:1px solid #dadada;
-margin: 1em 0 0 0;
-text-align:center;
-}
-#feedlist {
-z-index: 99;
-background: none repeat scroll 0 0 #EEEEEE;
-border: 1px solid #DADADA;
-color: #333333;
-width:100%;
-height: 0;
-overflow:hidden;
-left: 0;
-line-height: 20px;
-position: absolute;
-top: 30px;
--webkit-transition: all .3s ease;
--moz-transition: all .3s ease;
--ms-transition: all .3s ease;
--o-transition: all .3s ease;
-transition: all .3s ease;
-}
-#checkfeedlist:hover > #feedlist {
-display:block;
-left:0px;
-height:auto;
-}*/
 
 @media only screen and (max-width : 768px) {
 	#member-login > form {
 		display: none;
+	}
+
+	.login-btn {
+		display: block;
 	}
 }
 
 @media only screen and (min-width : 769px) {
 	.login-btn {
 		display: none;
+	}
+
+	#member-login > form {
+		display: block !important;
 	}
 }
