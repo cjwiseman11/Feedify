@@ -1,9 +1,9 @@
 <?php
 include_once 'slq-statements.php';
 
-$username = stripslashes($_POST['username']);
-$password = stripslashes($_POST['password']);
-$email = stripslashes($_POST['email']);
+$username = $_POST['username'];
+$password = $_POST['password'];
+$email = $_POST['email'];
 
 if(userExists($username,$email)){
   header("location: ../register.php?fail");

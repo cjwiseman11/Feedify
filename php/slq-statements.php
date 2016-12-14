@@ -126,3 +126,11 @@ function userExists($username, $email){
   }
   return $isUser;
 }
+
+function getUserPassword($username){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT `password` FROM `members` WHERE username = :username LIMIT 1");
+  $statement->execute(array(':username' => $username));
+  $row = $statement->fetchAll();
+  return $row;
+}
