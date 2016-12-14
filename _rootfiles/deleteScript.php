@@ -9,10 +9,7 @@ if($connection === false){
 	//TODO: Add error
 }
 
-$sql = "UPDATE posts SET archived = true WHERE date <= (NOW() - INTERVAL 1 MONTH) AND archived = 0";
-mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
-
-$getrows = "SELECT imgSrc FROM posts WHERE date <= (NOW() - INTERVAL 1 MONTH) AND archived = 1";
+$getrows = "SELECT imgSrc FROM posts WHERE date <= (NOW() - INTERVAL 1 MONTH) AND archived = 0";
 $result = mysqli_query($connection, $getrows) or die("Error in Selecting " . mysqli_error($connection));
 $deleted = 0;
 
@@ -25,7 +22,7 @@ while($row = mysqli_fetch_assoc($result)){
 
 echo "Successfully archived $deleted assets";
 
-$getrows = "SELECT imgSrc FROM posts WHERE date <= (NOW() - INTERVAL 2 MONTH) AND archived = 1";
+$getrows = "SELECT imgSrc FROM posts WHERE date <= (NOW() - INTERVAL 2 MONTH) AND archived = 0";
 $result = mysqli_query($connection, $getrows) or die("Error in Selecting " . mysqli_error($connection));
 $deleted = 0;
 
@@ -35,6 +32,9 @@ while($row = mysqli_fetch_assoc($result)){
         echo "File Deleted.";
       }
 }
+
+$sql = "UPDATE posts SET archived = true WHERE date <= (NOW() - INTERVAL 1 MONTH) AND archived = 0";
+mysqli_query($connection, $sql) or die("Error in Selecting " . mysqli_error($connection));
 
 echo "Successfully archived $deleted assets";
 
