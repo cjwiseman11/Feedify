@@ -134,3 +134,64 @@ function getUserPassword($username){
   $row = $statement->fetchAll();
   return $row;
 }
+
+function setKeepLoggedIn($username){
+  $memberid = getMemberID($username);
+  $token = crypt($username);
+  $db = connectToDatabase();
+  $statement = $db->prepare("INSERT INTO `keeploggedin`(`memberid`,`token`) VALUES (:memberid, :token)");
+  $statement->execute(array(':memberid' => $memberid["id"], ':token' => $token));
+  $cookie = $username . ':' . $token;
+  setcookie('rememberme', $cookie, 0, "/");
+}
+
+function rememberMe() {
+    $cookie = isset($_COOKIE['rememberme']) ? $_COOKIE['rememberme'] : '';
+    if ($cookie) {
+        list ($username, $token) = explode(':', $cookie);
+        if (!(crypt($username, $token) == $token)) {
+            return false;
+        }
+        $usertokenrows = fetchTokenByUserName($username);
+        foreach($usertokenrows as $row){
+          if ($row["token"] == $token) {
+              return $token;
+              break;
+          }
+        }
+    }
+}
+
+function fetchTokenByUserName($username){
+  $memberid = getMemberID($username);
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT `token` FROM `keeploggedin` WHERE memberid = :memberid");
+  $statement->execute(array(':memberid' => $memberid["id"]));
+  $row = $statement->fetchAll();
+  return $row;
+}
+
+function checkrememberme(){
+  $token = rememberMe();
+  if($token){
+      $db = connectToDatabase();
+      $statement = $db->prepare("SELECT m.* FROM `members` AS m
+                  INNER JOIN `keeploggedin` AS k
+                      ON k.memberid = m.id
+                  WHERE k.token = :token");
+      $statement->execute(array(':token' => $token));
+      $row = $statement->fetchAll();
+      return $row[0]["username"];
+  }
+}
+
+function removeRememberMe($username){
+  $cookie = isset($_COOKIE['rememberme']) ? $_COOKIE['rememberme'] : '';
+  if ($cookie) {
+    unset($_COOKIE['rememberme']);
+    $db = connectToDatabase();
+    $memberid = getMemberID($username);
+    $statement = $db->prepare("DELETE FROM `keeploggedin` WHERE memberid = :memberid");
+    $statement->execute(array(':memberid' => $memberid["id"]));
+  }
+}
