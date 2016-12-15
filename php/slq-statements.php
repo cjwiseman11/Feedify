@@ -68,6 +68,14 @@ function getMemberID($username){
   return $memberidrow;
 }
 
+function getUsernamefromID($memberid){
+  $db = connectToDatabase();
+  $memberusername = $db->prepare("SELECT `username` FROM `members` WHERE id = :memberid");
+  $memberusername->execute(array(':memberid' => $memberid));
+  $result = $memberusername->fetchAll();
+  return $result[0]["username"];
+}
+
 function saveforlater($postid,$username){
   $db = connectToDatabase();
   $memberidrow = getMemberId($username);
@@ -106,4 +114,94 @@ function removeSavedPost($username, $postid){
   $db = connectToDatabase();
   $statement = $db->prepare("DELETE FROM `savedposts` WHERE postid = :postid AND memberid = :memberid");
   $statement->execute(array(':postid' => $postid, ':memberid' => $memberid["id"]));
+}
+
+function registerUser($username, $password, $email){
+  $hash = crypt($password);
+  $db = connectToDatabase();
+  $statement = $db->prepare("INSERT INTO `members`(`username`,`password`,`email`) VALUES (:username, :password, :email)");
+  $statement->execute(array(':username' => $username, ':password' => $hash, ':email' => $email));
+}
+
+function userExists($username, $email){
+  $db = connectToDatabase();
+  $statement = $db->prepare("  SELECT * FROM `members` WHERE username = :username OR email = :email");
+  $statement->execute(array(':username' => $username, ':email' => $email));
+  if($statement->rowCount() > 0) {
+    $isUser = true;
+  } else {
+    $isUser = false;
+  }
+  return $isUser;
+}
+
+function getUserPassword($username){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT `password` FROM `members` WHERE username = :username LIMIT 1");
+  $statement->execute(array(':username' => $username));
+  $row = $statement->fetchAll();
+  return $row;
+}
+
+function setKeepLoggedIn($username){
+  $memberid = getMemberID($username);
+  $token = crypt($username);
+  $db = connectToDatabase();
+  $statement = $db->prepare("INSERT INTO `keeploggedin`(`memberid`,`token`) VALUES (:memberid, :token)");
+  $statement->execute(array(':memberid' => $memberid["id"], ':token' => $token));
+  $cookie = $memberid["id"] . ':' . $token;
+  setcookie('rememberme', $cookie, time()+60*60*24*30, "/");
+}
+
+function rememberMe() {
+    $cookie = isset($_COOKIE['rememberme']) ? $_COOKIE['rememberme'] : '';
+    if ($cookie) {
+        list ($memberid, $token) = explode(':', $cookie);
+        $username = getUsernamefromID($memberid);
+        if (!(crypt($username, $token) == $token)) {
+            return false;
+        }
+
+        $usertokenrows = fetchTokenByUserName($username);
+        foreach($usertokenrows as $row){
+          if ($row["token"] == $token) {
+              return $token;
+              break;
+          }
+        }
+    }
+}
+
+function fetchTokenByUserName($username){
+  $memberid = getMemberID($username);
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT `token` FROM `keeploggedin` WHERE memberid = :memberid");
+  $statement->execute(array(':memberid' => $memberid["id"]));
+  $row = $statement->fetchAll();
+  return $row;
+}
+
+function checkrememberme(){
+  $token = rememberMe();
+  if($token){
+      $db = connectToDatabase();
+      $statement = $db->prepare("SELECT m.* FROM `members` AS m
+                  INNER JOIN `keeploggedin` AS k
+                      ON k.memberid = m.id
+                  WHERE k.token = :token");
+      $statement->execute(array(':token' => $token));
+      $row = $statement->fetchAll();
+      return $row[0]["username"];
+  }
+}
+
+function removeRememberMe($username){
+  if (isset($_COOKIE['rememberme'])) {
+    //unset($_COOKIE['rememberme']);
+    setcookie('rememberme', null, -1, '/');
+    $db = connectToDatabase();
+    $memberid = getMemberID($username);
+    $statement = $db->prepare("DELETE FROM `keeploggedin` WHERE memberid = :memberid");
+    $statement->execute(array(':memberid' => $memberid["id"]));
+  }
 }

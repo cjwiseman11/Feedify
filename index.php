@@ -1,4 +1,8 @@
-<?php if (substr_count($_SERVER[‘HTTP_ACCEPT_ENCODING’], ‘gzip’)) ob_start(“ob_gzhandler”); else ob_start(); session_start(); include_once 'php/slq-statements.php';?>
+<?php if (substr_count($_SERVER[‘HTTP_ACCEPT_ENCODING’], ‘gzip’)) ob_start(“ob_gzhandler”); else ob_start(); session_start(); include_once 'php/slq-statements.php';
+if(isset($_COOKIE['rememberme'])){
+    $_SESSION["feedifyusername"] = checkrememberme();
+	}
+?>
 <!doctype php>
 <html lang="en">
 <head>
@@ -105,6 +109,11 @@ $('#randomify').click(function(){
                     <label for="password">Password</label>
                     <input name="password" type="password" class="form-control" id="password" placeholder="Password">
                 </div>
+								<div class="checkbox">
+									<label>
+										<input name="rememberme" value="true" type="checkbox">Remember Me
+									</label>
+								</div>
                 <button type="submit" class="btn btn-default">Login</button>
             </form>
     <?php else : ?>
