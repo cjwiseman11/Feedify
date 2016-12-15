@@ -1,5 +1,7 @@
 <?php if (substr_count($_SERVER[‘HTTP_ACCEPT_ENCODING’], ‘gzip’)) ob_start(“ob_gzhandler”); else ob_start(); session_start(); include_once 'php/slq-statements.php';
-include_once 'php/checklogin.php';
+if(isset($_COOKIE['rememberme'])){
+    $_SESSION["feedifyusername"] = checkrememberme();
+	}
 ?>
 <!doctype php>
 <html lang="en">
