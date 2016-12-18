@@ -20,6 +20,7 @@
 		exit;
 	} else {
 		$autoSiteLink = $feed_to_array->channel->link;
+		$feedtitle = $feed_to_array->channel->title;
 		//Sending form data to sql db.
 		$newsFeedExist = mysqli_query($connection,"SELECT * FROM newsfeeds WHERE rsslink = '$feed'");
 		$newsFeedExist_rows = $newsFeedExist->num_rows;
@@ -31,8 +32,8 @@
 		}
 
 		if ($newsFeedExist_rows === 0){
-			mysqli_query($connection,"INSERT INTO newsfeeds (rsslink, rssSrcSite)
-			VALUES ('$_POST[feed_link]','$autoSiteLink')");
+			mysqli_query($connection,"INSERT INTO newsfeeds (rsslink, rssSrcSite, feedtitle)
+			VALUES ('$_POST[feed_link]','$autoSiteLink','$feedtitle')");
 		}
 
 		$chanExist = mysqli_query($connection,"

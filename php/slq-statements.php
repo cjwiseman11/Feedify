@@ -40,11 +40,22 @@ function getPostsByChan($chan, $limit, $offset){
 }
 
 function getFullFeedList(){
-    $db = connectToDatabase();
-    $statement = $db->prepare("select * from newsfeeds");
-    $statement->execute();
-    $row = $statement->fetchAll();
-    return $row;
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM newsfeeds");
+  $statement->execute();
+  $row = $statement->fetchAll();
+  return $row;
+}
+
+function getMemberFeedList($username){
+  $db = connectToDatabase();
+  $row = getMemberId($username);
+  $statement = $db->prepare("SELECT * FROM newsfeeds
+                              WHERE id NOT IN (SELECT feedid FROM `memberfeeds`
+                                WHERE `memberid` = :memberid)");
+  $statement->execute(array(':memberid' => $row["id"]));
+  $row = $statement->fetchAll();
+  return $row;
 }
 
 function getFeedListForChan($chan){
@@ -204,4 +215,34 @@ function removeRememberMe($username){
     $statement = $db->prepare("DELETE FROM `keeploggedin` WHERE memberid = :memberid");
     $statement->execute(array(':memberid' => $memberid["id"]));
   }
+}
+
+function getChannelsList(){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM `channels` ORDER BY id ASC");
+  $statement->execute();
+  return $statement->fetchAll();
+}
+
+function getFeedsByUser($username){
+  $db = connectToDatabase();
+  $memberid = getMemberId($username);
+  $statement = $db->prepare("SELECT n.* FROM `newsfeeds` AS n
+    INNER JOIN `memberfeeds` AS k
+    ON k.feedid = n.id
+    WHERE k.memberid = :memberid
+    ORDER BY id ASC");
+  $statement->execute(array(':memberid' => $memberid["id"]));
+  return $statement->fetchAll();
+}
+
+function addToMemberFeed($feed, $user){
+  $db = connectToDatabase();
+  $row = getMemberID($user);
+  $statement = $db->prepare("INSERT INTO `memberfeeds`(`memberid`, `feedid`) VALUES (:memberid, :feedid)");
+  $statement->execute(array(':feedid' => $feed, ':memberid' => $row["id"]));
+}
+
+function removeFromMemberFeed($feed){
+
 }

@@ -101,4 +101,23 @@ $(document).ready(function(){
     console.log("Last Seen Post: " + lastSeenPostId);
 
 });
+
+//For your feeds page
+$('#feed-section > p').on("click", function(e){
+	e.preventDefault();
+	$('.member-feedlist').toggle();
+});
+
+/*$('.addFeed').each(function(){
+	$(this).on("click", function(e){
+			e.preventDefault();
+			var feed = $(this).attr("id");
+			$.get("php/add-remove.php?type=add&feed=" + feed);
+	});
+});
+$('.removeFeed').on("click", function(){
+		e.preventDefault();
+		var feed = $(this).attr("id");
+		$.get("php/add-remove.php?type=remove&feed=" + feed);
+});*/
 //localStorage.removeItem('firstTime'); To Remove
