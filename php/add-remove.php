@@ -7,6 +7,6 @@ session_start();
   if($type == 'add'){
     addToMemberFeed($feed, $_SESSION["feedifyusername"]);
   } else if($type == 'remove'){
-    removeFromMemberFeed($feed);
+    removeFromMemberFeed($feed, $_SESSION["feedifyusername"]);
   }
 ?>

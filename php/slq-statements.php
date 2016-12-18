@@ -243,6 +243,9 @@ function addToMemberFeed($feed, $user){
   $statement->execute(array(':feedid' => $feed, ':memberid' => $row["id"]));
 }
 
-function removeFromMemberFeed($feed){
-
+function removeFromMemberFeed($feed, $user){
+  $db = connectToDatabase();
+  $row = getMemberID($user);
+  $statement = $db->prepare("DELETE FROM `memberfeeds` WHERE `feedid`=:feedid AND `memberid`=:memberid");
+  $statement->execute(array(':feedid' => $feed, ':memberid' => $row["id"]));
 }

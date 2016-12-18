@@ -24,9 +24,9 @@ echo "<div class='member-feedlist container'>";
       foreach($rowUser as $row)
       {
         if($row["feedtitle"] == ""){
-      	   echo "Remove | <a href='" . $row["rssSrcSite"] . "'>" . $row["rsslink"] . "</a><br>";
+      	   echo "<a class='removeFeed' href='php/add-remove.php?type=remove&id=". $row["id"] ."'>Remove</a> | <a href='" . $row["rssSrcSite"] . "'>" . $row["rsslink"] . "</a><br>";
          } else {
-           echo "Remove | <a href='" . $row["rssSrcSite"] . "'>" . $row["feedtitle"] . "</a><br>";
+           echo "<a class='removeFeed' href='php/add-remove.php?type=remove&id=". $row["id"] ."'>Remove</a> | <a href='" . $row["rssSrcSite"] . "'>" . $row["feedtitle"] . "</a><br>";
          }
       }
     echo "</div>";
