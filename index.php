@@ -118,7 +118,7 @@ $('#randomify').click(function(){
             </form>
     <?php else : ?>
         <div id="member-loggedin">
-            <p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <a href="saved-posts.php">View saved posts</a> | <a href="php/logout.php">Logout</a>
+            <p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <a href="your-feeds.php">Your Feeds</a> | <a href="saved-posts.php">View saved posts</a> | <a href="php/logout.php">Logout</a>
 						</p>
         </div>
     <?php endif; ?>
