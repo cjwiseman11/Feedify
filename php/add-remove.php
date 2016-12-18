@@ -9,4 +9,6 @@ session_start();
   } else if($type == 'remove'){
     removeFromMemberFeed($feed, $_SESSION["feedifyusername"]);
   }
+
+    header("location: ../your-feeds.php");
 ?>
