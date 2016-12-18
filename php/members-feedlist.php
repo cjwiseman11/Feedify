@@ -12,7 +12,7 @@ if($chan == "all")
     $rowAll = getFeedListForChan($chan);
 }
 $rowUser = getFeedsByUser($_SESSION["feedifyusername"]);
-echo "<div class='member-feedlist container'>";
+echo "<div class='member-feedlist hidden container'>";
   echo "<p>Filter by channel: ";
   $result = getChannelsList();
   foreach(getChannelsList() as $row){

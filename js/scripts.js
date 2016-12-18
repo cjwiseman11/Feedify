@@ -103,21 +103,14 @@ $(document).ready(function(){
 });
 
 //For your feeds page
-$('#feed-section > p').on("click", function(e){
+$('.show-feedlists').on("click", function(e){
 	e.preventDefault();
-	$('.member-feedlist').toggle();
+	if($('.member-feedlist').hasClass('hidden')){
+		$('.member-feedlist').removeClass('hidden');
+	} else {
+				$('.member-feedlist').addClass('hidden');
+	}
 });
 
-/*$('.addFeed').each(function(){
-	$(this).on("click", function(e){
-			e.preventDefault();
-			var feed = $(this).attr("id");
-			$.get("php/add-remove.php?type=add&feed=" + feed);
-	});
-});
-$('.removeFeed').on("click", function(){
-		e.preventDefault();
-		var feed = $(this).attr("id");
-		$.get("php/add-remove.php?type=remove&feed=" + feed);
-});*/
+
 //localStorage.removeItem('firstTime'); To Remove

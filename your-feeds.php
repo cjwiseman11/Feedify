@@ -86,7 +86,7 @@
 	<div class="row">
 		<div id="feed-section" class="col-sm-12">
       <h2>Your Feeds:</h2>
-			<p><a href="">Add news to your feeds</a></p>
+			<p><a href="" class="show-feedlists">Add news to your feeds</a></p>
 		</div>
         <div class="row">
         	<?php include('php/members-feedlist.php');?>
