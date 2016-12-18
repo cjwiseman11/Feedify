@@ -24,7 +24,7 @@ if($limit > 20){
 
 $offset = ($page - 1) * $limit;
 
-$row = getPosts($_SESSION['feedifyusername']);
+$row = getPosts($_SESSION['feedifyusername'], $limit, $offset, $chan);
 
 foreach($row as $row)
 {

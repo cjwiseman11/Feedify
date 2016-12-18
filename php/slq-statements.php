@@ -251,7 +251,7 @@ function removeFromMemberFeed($feed, $user){
 }
 
 //This could potentially replace all other GET POSTS functions but need old ones until merged
-function getPosts($username){
+function getPosts($username, $limit, $offset, $chan){
   $db = connectToDatabase();
   $row = getMemberID($username);
   $statement = $db->prepare("SELECT c.* FROM `posts` as c
@@ -259,7 +259,7 @@ function getPosts($username){
           ON c.newsfeedid = b.feedid
       WHERE b.memberid = :memberid
       ORDER BY c.id DESC
-      LIMIT 20 OFFSET 0");
-  $statement->execute(array(':memberid' => $row["id"]));
+      LIMIT :limit OFFSET :offset");
+  $statement->execute(array(':memberid' => $row["id"], ':limit' => $limit, ':offset' => $offset));
     return $statement->fetchAll();
 }

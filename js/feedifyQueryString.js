@@ -24,7 +24,7 @@ $(function(){
 			oldPage = pageSet - 1;
 			lim = getParameterByName('lim');
 			chan = getParameterByName('chan');
-			
+
 			//lim and pageset valid checking
 			if(pageSet==="0" || isNaN(pageSet)){
 				pageSet = "1";
@@ -45,45 +45,45 @@ $(function(){
 			chan = "all";
 			//window.location = window.location + '?p=' + pageSet + '&lim=' + lim + "&chan=" + chan;
 		}
-		
+
 		if(lim > 20) {
 			lim = "20";
 			setWindowLocationSearch();
 		}
-		
+
 		$('.nxtPg').on("click", function(e){
 			event.preventDefault();
 			window.location.search = "?p=" + newPage + '&lim=' + lim + "&chan=" + chan;
 			});
-			
+
 		$('.prevPg').on("click", function(e){
 			event.preventDefault();
 			window.location.search = "?p=" + oldPage + '&lim=' + lim + "&chan=" + chan;
 			});
-			
+
 		$('.firstPg').on("click", function(e){
 			event.preventDefault();
 			window.location.search = "?p=1" + '&lim=' + lim + "&chan=" + chan;
 			});
-			
+
 			function setLim(limNum){
 				event.preventDefault();
 				lim = limNum;
 				setWindowLocationSearch();
 			}
-			
+
 		$('#lim5').on("click", function(e){
 			setLim("5");
 		});
-		
+
 		$('#lim10').on("click", function(e){
 			setLim("10");
 		});
-		
+
 		$('#lim15').on("click", function(e){
 			setLim("15");
 		});
-		
+
 		$('#lim20').on("click", function(e){
 			setLim("20");
 		});

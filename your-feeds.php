@@ -54,6 +54,26 @@
        });
     }
     </script>
+		<?php
+			//Get current channel and save into variable
+					if($_GET['chan']){
+							$chan = $_GET['chan'];
+					} else {
+							$chan = "all";
+					}
+
+					if($_GET['lim']){
+							$lim = $_GET['lim'];
+					} else {
+							$lim = "10";
+					}
+
+					if($_GET['p']){
+							$page = $_GET['p'];
+					} else {
+							$page = "1";
+					}
+		?>
   </head>
 <body>
 <div id="member-login" class="text-right container">
@@ -87,6 +107,16 @@
 		<div id="feed-section" class="col-sm-12">
       <h2>Your Feeds:</h2>
 			<p><a href="" class="show-feedlists">Add news to your feeds</a></p>
+			<p>Page: <?php echo $page; ?>
+			<p><?php
+				$nextpage = $page + 1;
+				$prevpage = $page - 1;
+				if($page == 1){
+					echo "<a href='?p=2&lim=$lim&chan=$chan'>Next Page ></a>";
+				} else if($page >1){
+					echo "<a href='?p=1&lim=$lim&chan=$chan'><< First</a> | <a href='?p=$prevpage&lim=$lim&chan=$chan'>< Previous</a> | <a href='?p=$nextpage&lim=$lim&chan=$chan'>Next ></a>";
+				}
+			?></p>
 		</div>
         <div class="row">
         	<?php include('php/members-feedlist.php');?>
