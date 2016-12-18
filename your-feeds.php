@@ -93,7 +93,7 @@
         </div>
         <!--This is where the feed will appear -->
         <div id="news-feedjson" class="col-sm-12">
-            <?php include('php/createSavedPosts.php');?>
+            <?php include('php/createMemberPosts.php');?>
         </div>
         <!--End Feed-->
 

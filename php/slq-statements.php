@@ -249,3 +249,17 @@ function removeFromMemberFeed($feed, $user){
   $statement = $db->prepare("DELETE FROM `memberfeeds` WHERE `feedid`=:feedid AND `memberid`=:memberid");
   $statement->execute(array(':feedid' => $feed, ':memberid' => $row["id"]));
 }
+
+//This could potentially replace all other GET POSTS functions but need old ones until merged
+function getPosts($username){
+  $db = connectToDatabase();
+  $row = getMemberID($username);
+  $statement = $db->prepare("SELECT c.* FROM `posts` as c
+      INNER JOIN `memberfeeds` as b
+          ON c.newsfeedid = b.feedid
+      WHERE b.memberid = :memberid
+      ORDER BY c.id DESC
+      LIMIT 20 OFFSET 0");
+  $statement->execute(array(':memberid' => $row["id"]));
+    return $statement->fetchAll();
+}
