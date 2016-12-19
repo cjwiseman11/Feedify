@@ -62,12 +62,12 @@
     <div class="col-sm-6 submit-section">
       <form action="php/send_feed_channel.php" method="post" onsubmit="return sendRSS();" class="form col-sm-8">
       <div class="form-group">
-        <p>Please input an RSS Link, or <a href="#search-area">use the search area</a></p>
-        <input type="text" name="feed_link" class="form-control" id="rssfeedsubmit" placeholder="RSS URL">
+        <label class="control-label" for="feed_link">Please input an RSS Link, or <a href="#search-area">use the search area</a></label>
+        <input type="text" name="feed_link" class="form-control" id="rssfeedsubmit" placeholder="RSS URL" required>
       </div>
       <div class="form-group">
-        <p>Please let us know which channel you want to submit to, or enter a unique name to create your own:</p>
-        <input type="text" name="feed_channel" class="form-control" value="<?php echo  $chan ?>" placeholder="Channel">
+        <label class="control-label" for="feed_channel">Please let us know which channel you want to submit to, or enter a unique name to create your own:</label>
+        <input type="text" name="feed_channel" class="form-control" value="<?php echo  $chan ?>" placeholder="Channel" required>
       </div>
       <div class="radio">
         <p>Would you like this feed to be hidden or public?</p>

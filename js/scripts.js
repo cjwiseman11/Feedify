@@ -76,12 +76,21 @@ $(document).ready(function(){
 	$('.search-results').on("click", ".result-item", function(e){
 		e.preventDefault();
 		$('#rssfeedsubmit').val($(e.target).text());
+		$('#rssfeedsubmit').parent().addClass("has-success");
 	});
 
 		$('#feedLink').on("keyup", function(){
-			$.get("php/search.php?val=" + $('#feedLink').val(), function(response){
-					$('.search-results').html(response);
-			});
+			if(!($('#feedLink').val().length < 2)){
+				$.get("php/search.php?val=" + $('#feedLink').val(), function(response){
+						if(response.length == 0){
+							$('.search-results').html("<p>We do not currently have a match for this feed.</p>");
+						} else {
+							$('.search-results').html(response);
+						}
+				});
+			} else {
+				$('.search-results').html("Please type more than 1 character.");
+			}
 		});
 
     var firstTime = localStorage.getItem('firstTime');
