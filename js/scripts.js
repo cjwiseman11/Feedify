@@ -81,9 +81,21 @@ $(document).ready(function(){
 
 		$('#feedLink').on("keyup", function(){
 			if(!($('#feedLink').val().length < 2)){
-				$.get("php/search.php?val=" + $('#feedLink').val(), function(response){
+				$.get("php/search.php?type=rows&val=" + $('#feedLink').val(), function(response){
 						if(response.length == 0){
-							$('.search-results').html("<p>We do not currently have a match for this feed.</p>");
+							$.get("php/search.php?type=url&val=" + $('#feedLink').val(), function(urlresponse){
+								if(urlresponse == "false"){
+									$('.search-results').html("<p>We do not currently have a match for this feed.</p><p>If you enter a full URL, we can try and find it for you and add it!</p>");
+								} else {
+									$('.search-results').html("<a href class='rss-search'>Click here to search " + $('#feedLink').val() + " for feed</a>");
+									$('.rss-search').on("click",function(e){
+										e.preventDefault();
+										$.get("php/search.php?type=rss&val=" + $('#feedLink').val(), function(rssresponse){
+											$('.search-results').html(rssresponse);
+										});
+									});
+								}
+							});
 						} else {
 							$('.search-results').html(response);
 						}
