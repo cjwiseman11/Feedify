@@ -219,7 +219,7 @@ function removeRememberMe($username){
 
 function getChannelsList(){
   $db = connectToDatabase();
-  $statement = $db->prepare("SELECT * FROM `channels` ORDER BY id ASC");
+  $statement = $db->prepare("SELECT * FROM `channels` WHERE id NOT IN (SELECT chanid FROM `memberchannels` WHERE hidden = 1) ORDER BY id ASC");
   $statement->execute();
   return $statement->fetchAll();
 }
@@ -262,4 +262,16 @@ function getPosts($username, $limit, $offset, $chan){
       LIMIT :limit OFFSET :offset");
   $statement->execute(array(':memberid' => $row["id"], ':limit' => $limit, ':offset' => $offset));
     return $statement->fetchAll();
+}
+
+function getMembersChannels($username){
+  $db = connectToDatabase();
+  $row = getMemberID($username);
+  $statement = $db->prepare("SELECT c.* FROM `channels` as c
+    INNER JOIN `memberchannels` as m
+        ON c.id = m.chanid
+      WHERE m.memberid = :memberid
+      GROUP BY c.id");
+  $statement->execute(array(':memberid' => $row["id"]));
+  return $statement->fetchAll();
 }

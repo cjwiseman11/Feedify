@@ -105,7 +105,7 @@
 	</div>
 	<div class="row">
 		<div id="feed-section" class="col-sm-12">
-      <h2>Your Feeds:</h2>
+      <h2>Your Feeds:</h2><?php include('php/getMembersFeeds.php');?>
 			<p><a href="" class="show-feedlists">Add news to your feeds</a></p>
 			<p>Page: <?php echo $page; ?>
 			<p><?php

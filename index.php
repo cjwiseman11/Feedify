@@ -162,28 +162,17 @@ $('#randomify').click(function(){
 				?></p>
 			</div>
 			<div id="submit-section" class="col-sm-6">
-				<h2><small>Submit RSS:</small></h2>
-				<form action="php/send_feed_channel.php" method="post" onsubmit="return sendRSS();" class="form-inline">
-				<div class="form-group">
-					<input type="text" name="feed_link" class="form-control" id="feedLink" placeholder="RSS URL">
-				</div>
-				<div class="form-group">
-					<input type="text" name="feed_channel" class="form-control" value="<?php echo  $chan ?>" placeholder="Channel">
-				</div>
-				<input type="submit" class="btn btn-default">
-				<div class="alert alert-danger col-sm-12 hide" role="alert">
-				<p>You must submit an RSS feed.</p>
-				</div>
-				</form>
 				<br>
-                <a href="//RandomArticle" id="randomify" type="submit" class="btn btn-default">Random Article</a>
-                <br><br>
+				<p>Feedify is a news aggregator where you can grab all your news in one place.</p>
+        <a href="//RandomArticle" id="randomify" type="submit" class="btn btn-default">Random Article</a>
+				<a href="submit.php" id="randomify" type="submit" class="btn btn-default">Submit Feed</a>
+        <br><br>
 			</div>
 		</div>
         <div class="row">
             <div id="feedlist" class="col-sm-12">
                 <p>The feeds in this channel are:</p>
-                <?php include('php/createFeedsList.php');?>
+                <?php include('php/members-feedlist.php');?>
             </div>
         </div>
         <!--This is where the feed will appear -->
