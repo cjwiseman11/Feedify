@@ -275,3 +275,11 @@ function getMembersChannels($username){
   $statement->execute(array(':memberid' => $row["id"]));
   return $statement->fetchAll();
 }
+
+function searchFeeds($searchvalue){
+  $db = connectToDatabase();
+  $searchvalue = "%$searchvalue%";
+  $statement = $db->prepare("SELECT * FROM `newsfeeds` WHERE `rsslink` LIKE :searchvalue");
+  $statement->execute(array(':searchvalue' => $searchvalue));
+  return $statement->fetchAll();
+}

@@ -70,7 +70,19 @@ $('.login-btn').on("click", function(){
 	//$('#member-login > form').slideToggle(300);
 });
 //Check FirstTime Var
+
 $(document).ready(function(){
+
+	$('.search-results').on("click", ".result-item", function(e){
+		e.preventDefault();
+		$('#rssfeedsubmit').val($(e.target).text());
+	});
+
+		$('#feedLink').on("keyup", function(){
+			$.get("php/search.php?val=" + $('#feedLink').val(), function(response){
+					$('.search-results').html(response);
+			});
+		});
 
     var firstTime = localStorage.getItem('firstTime');
 
