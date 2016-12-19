@@ -28,18 +28,18 @@ if($searchtype == "rows"){
       $type = $link->getAttribute('type');
       $final = $link->getAttribute('href');
       if(strpos($type, 'rss') !== FALSE) {
-        $result .= "<p>$final</p>";
+        $result .= "<p><a href class='result-item'>$final</a></p>";
       } else if(strpos($type, 'atom') !== FALSE){
-        $result .= "<p>$final</p>";
+        $result .= "<p><a href class='result-item'>$final</a></p>";
       }
   }
   foreach($doc->getElementsByTagName('a') AS $anchor) {
       $href = $anchor->getAttribute('href');
       $final = $anchor->getAttribute('href');
       if(strpos($href, '.rss') !== FALSE) {
-        $result .= "<p>$final</p>";
+        $result .= "<p><a href class='result-item'>$final</a></p>";
       } else if(strpos($href, '.atom') !== FALSE){
-        $result .= "<p>$final</p>";
+        $result .= "<p><a href class='result-item'>$final</a></p>";
       }
     }
     echo $result;
