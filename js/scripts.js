@@ -91,7 +91,11 @@ $(document).ready(function(){
 									$('.rss-search').on("click",function(e){
 										e.preventDefault();
 										$.get("php/search.php?type=rss&val=" + $('#feedLink').val(), function(rssresponse){
-											$('.search-results').html(rssresponse);
+											if(!(rssresponse.length == 0)){
+												$('.search-results').html(rssresponse);
+											} else {
+												$('.search-results').html("No Results");
+											}
 										});
 									});
 								}
