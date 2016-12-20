@@ -62,7 +62,7 @@
     <div class="col-sm-6 submit-section">
       <form action="php/send_feed_channel.php" method="post" onsubmit="return sendRSS();" class="form col-sm-8">
       <div class="form-group">
-        <label class="control-label" for="feed_link">Please input an RSS Link, or <a href="#search-area">use the search area</a></label>
+        <label class="control-label" for="feed_link">Please input a full RSS Link including HTTP, or <a href="#search-area" id="search-area-link">use the search area</a></label>
         <input type="text" name="feed_link" class="form-control" id="rssfeedsubmit" placeholder="RSS URL" required>
         <span class='help-block' id='rssresponse-helpblock'>Valid Feed Detected! Yay!</span>
       </div>

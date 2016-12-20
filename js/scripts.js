@@ -110,7 +110,7 @@ $(document).ready(function(){
 		});
 
 		//RSS Live checker
-		$('#rssfeedsubmit').on("change keyup paste click", function(){
+		$('#rssfeedsubmit').on("change keyup paste", function(){
 			$.get("php/search.php?type=url&val=" + $('#rssfeedsubmit').val(), function(urlresponse){
 				if(!(urlresponse == "false")){
 					$.get("php/rss-validator.php?val=" + $('#rssfeedsubmit').val(), function(rssresponse){
@@ -124,6 +124,12 @@ $(document).ready(function(){
 					});
 				}
 			});
+		});
+
+		$('#search-area-link').on("click",function(e){
+			e.preventDefault();
+			$('#feedLink').focus();
+			$('#feedLink').select();
 		});
 
     var firstTime = localStorage.getItem('firstTime');
