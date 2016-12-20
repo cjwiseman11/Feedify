@@ -79,7 +79,7 @@ $(document).ready(function(){
 		$('#rssfeedsubmit').parent().addClass("has-success");
 	});
 
-		$('#feedLink').on("keyup", function(){
+		$('#feedLink').on("change keyup paste", function(){
 			if(!($('#feedLink').val().length < 2)){
 				$.get("php/search.php?type=rows&val=" + $('#feedLink').val(), function(response){
 						if(response.length == 0){
@@ -107,6 +107,23 @@ $(document).ready(function(){
 			} else {
 				$('.search-results').html("Please type more than 1 character.");
 			}
+		});
+
+		//RSS Live checker
+		$('#rssfeedsubmit').on("change keyup paste click", function(){
+			$.get("php/search.php?type=url&val=" + $('#rssfeedsubmit').val(), function(urlresponse){
+				if(!(urlresponse == "false")){
+					$.get("php/rss-validator.php?val=" + $('#rssfeedsubmit').val(), function(rssresponse){
+						if(rssresponse == "true"){
+							$('#rssresponse-helpblock').show();
+							$('#rssfeedsubmit').parent().addClass("has-success");
+						} else {
+							$('#rssresponse-helpblock').hide();
+							$('#rssfeedsubmit').parent().removeClass("has-success");
+						}
+					});
+				}
+			});
 		});
 
     var firstTime = localStorage.getItem('firstTime');

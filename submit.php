@@ -64,6 +64,7 @@
       <div class="form-group">
         <label class="control-label" for="feed_link">Please input an RSS Link, or <a href="#search-area">use the search area</a></label>
         <input type="text" name="feed_link" class="form-control" id="rssfeedsubmit" placeholder="RSS URL" required>
+        <span class='help-block' id='rssresponse-helpblock'>Valid Feed Detected! Yay!</span>
       </div>
       <div class="form-group">
         <label class="control-label" for="feed_channel">Please let us know which channel you want to submit to, or enter a unique name to create your own:</label>
