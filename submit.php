@@ -66,23 +66,32 @@
         <input type="text" name="feed_link" class="form-control" id="rssfeedsubmit" placeholder="RSS URL" required>
         <span class='help-block' id='rssresponse-helpblock'>Valid Feed Detected! Yay!</span>
       </div>
-      <div class="form-group">
-        <label class="control-label" for="feed_channel">Please let us know which channel you want to submit to, or enter a unique name to create your own:</label>
-        <input type="text" name="feed_channel" class="form-control" value="<?php echo  $chan ?>" placeholder="Channel" required>
-      </div>
-      <div class="radio">
-        <p>Would you like this feed to be hidden or public?</p>
-        <label>
-          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
-          Keep this feed hidden please
-        </label>
-      </div>
-      <div class="radio">
-        <label>
-          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
-          Make it public, for all to see
-        </label>
-      </div>
+			<select id="channel-selector" class="form-control">
+			  <option>Choose a channel</option>
+			  <option id="create-channel">Create your own...</option>
+				<?php foreach(getChannelsList() as $row){
+					echo "<option>" . $row['channame'] . "</option>";
+				}?>
+			</select>
+			<input type="text" name="new-channel" class="form-control" id="new-channel-entry" placeholder="New channel here" required>
+			<span class='help-block' id='new-channel-message'>This channel already exists.</span>
+			<div id="private-channel-radio" class="radio-selection">
+				<br>
+				<p>Would you like this channel to be hidden or public?</p>
+	      <div class="radio">
+	        <label>
+	          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+	          Keep this channel hidden please
+	        </label>
+	      </div>
+	      <div class="radio">
+	        <label>
+	          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+	          Make the channel public, for all to see
+	        </label>
+	      </div>
+			</div>
+			<br>
       <input type="submit" class="btn btn-default">
       <div class="alert alert-danger col-sm-12 hide" role="alert">
       <p>You must submit an RSS feed.</p>

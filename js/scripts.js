@@ -122,6 +122,36 @@ $(document).ready(function(){
 							$('#rssfeedsubmit').parent().removeClass("has-success");
 						}
 					});
+				} else {
+					$('#rssresponse-helpblock').hide();
+					$('#rssfeedsubmit').parent().removeClass("has-success");
+				}
+			});
+		});
+
+		//Channel selector
+		$('#channel-selector').on("change", function(){
+			if ($(this).val() === 'Create your own...') {
+				$('#private-channel-radio').show();
+				$('#new-channel-entry').show();
+				$('#new-channel-entry').focus();
+			} else {
+				$('#private-channel-radio').hide();
+				$('#new-channel-entry').hide();
+				$('#new-channel-message').hide();
+				$('#new-channel-message').parent().removeClass("has-error");
+			}
+		});
+
+		//Channel live checker
+		$('#new-channel-entry').on("change keyup paste", function(){
+			$.get("php/search.php?type=channel&val=" + $('#new-channel-entry').val(), function(channelresponse){
+				if(channelresponse == "fail"){
+					$('#new-channel-message').show();
+					$('#new-channel-message').parent().addClass("has-error");
+				} else {
+					$('#new-channel-message').hide();
+					$('#new-channel-message').parent().removeClass("has-error");
 				}
 			});
 		});
@@ -159,7 +189,6 @@ $(document).ready(function(){
 
     localStorage.setItem('lastSeenPostId', newsestPostId);
     console.log("Last Seen Post: " + lastSeenPostId);
-
 });
 
 //For your feeds page

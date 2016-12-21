@@ -43,4 +43,11 @@ if($searchtype == "rows"){
       }
     }
     echo $result;
+} else if($searchtype == "channel"){
+  $result = getChannelsList();
+  foreach($result as $row){
+    if($row["channame"] == $searchvalue){
+      echo "fail";
+    }
+  }
 }

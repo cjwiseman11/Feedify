@@ -126,6 +126,6 @@ a#randomify:hover {
 	}
 }
 
-#rssresponse-helpblock {
+#rssresponse-helpblock, #new-channel-entry, #new-channel-message, #private-channel-radio {
 	display: none;
 }
