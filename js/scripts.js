@@ -1,5 +1,5 @@
 function sendRSS() {
-	if($('#feedLink').val() == ""){
+	if($('#rssfeedsubmit').val() == ""){
 		$('.alert-danger').removeClass('hide');
 		return false;
 	}else{

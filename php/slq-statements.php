@@ -239,8 +239,9 @@ function getFeedsByUser($username){
 function addToMemberFeed($feed, $user){
   $db = connectToDatabase();
   $row = getMemberID($user);
+  $feedid = getFeedId($feed);
   $statement = $db->prepare("INSERT INTO `memberfeeds`(`memberid`, `feedid`) VALUES (:memberid, :feedid)");
-  $statement->execute(array(':feedid' => $feed, ':memberid' => $row["id"]));
+  $statement->execute(array(':feedid' => $feedid, ':memberid' => $row["id"]));
 }
 
 function removeFromMemberFeed($feed, $user){
@@ -282,4 +283,64 @@ function searchFeeds($searchvalue){
   $statement = $db->prepare("SELECT * FROM `newsfeeds` WHERE `rsslink` LIKE :searchvalue");
   $statement->execute(array(':searchvalue' => $searchvalue));
   return $statement->fetchAll();
+}
+
+function checkNewsFeed($feed){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM newsfeeds WHERE rsslink = :feed");
+  $statement->execute(array(':feed' => $feed));
+  return $statement->fetchAll();
+}
+
+function getChannelId($channel){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT `id` FROM channels WHERE channame = :channel");
+  $statement->execute(array(':channel' => $channel));
+  $result = $statement->fetchAll();
+  return $result[0]["id"];
+}
+
+function addToMemberChannel($channel, $username, $hidden){
+  $db = connectToDatabase();
+  $statement = $db->prepare("INSERT INTO channels (channame) VALUES (:channel)");
+  $statement->execute(array(':channel' => $channel));
+  $row = getMemberID($username);
+  $statement = $db->prepare("INSERT INTO memberchannels (chanid, memberid, hidden) VALUES (:chanid, :memberid, :hidden)");
+  $statement->execute(array(':chanid' => getChannelId($channel), ':memberid' => $row["id"], ':hidden' => $hidden));
+}
+
+function addToNewsfeeds($feed, $auto_site_link, $feed_title){
+  $db = connectToDatabase();
+  $statement = $db->prepare("INSERT INTO newsfeeds (rsslink, rssSrcSite, feedtitle) VALUES (:feedlink, :sitelink, :feedtitle)");
+  $statement->execute(array(':feedlink' => $feed, ':sitelink' => $auto_site_link, ':feedtitle' => $feed_title));
+}
+
+function checkIfChannelFeedLinkExists($feed, $channel){
+  $db = connectToDatabase();
+  $statement = $db->prepare("  SELECT * FROM `channelfeed-links`
+    WHERE newsfeedid = (SELECT id FROM newsfeeds WHERE rsslink= :feed)
+    AND channelid = (SELECT id FROM channels WHERE channame= :channel)");
+  $statement->execute(array(':feed' => $feed, ':channel' => $channel));
+  $result = $statement->fetchAll();
+  if($result){
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function addChannelFeedLink($feed, $channel){
+  $db = connectToDatabase();
+  $newsfeedid = getFeedId($feed);
+  $channelid = getChannelId($channel);
+  $statement = $db->prepare("INSERT INTO `channelfeed-links`(newsfeedid,channelid) VALUES ($newsfeedid, $channelid)");
+  $statement->execute();
+}
+
+function getFeedId($feed){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT `id` FROM `newsfeeds` WHERE rsslink = :feed");
+  $statement->execute(array(':feed' => $feed));
+  $result = $statement->fetchAll();
+  return $result[0]["id"];
 }

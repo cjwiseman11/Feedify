@@ -80,13 +80,13 @@
 				<p>Would you like this channel to be hidden or public?</p>
 	      <div class="radio">
 	        <label>
-	          <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+	          <input type="radio" name="optionsRadios" id="optionsRadios1" value="1">
 	          Keep this channel hidden please
 	        </label>
 	      </div>
 	      <div class="radio">
 	        <label>
-	          <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+	          <input type="radio" name="optionsRadios" id="optionsRadios2" value="0" checked>
 	          Make the channel public, for all to see
 	        </label>
 	      </div>
