@@ -66,14 +66,14 @@
         <input type="text" name="feed_link" class="form-control" id="rssfeedsubmit" placeholder="RSS URL" required>
         <span class='help-block' id='rssresponse-helpblock'>Valid Feed Detected! Yay!</span>
       </div>
-			<select id="channel-selector" class="form-control">
+			<select name="channel-selector" id="channel-selector" class="form-control">
 			  <option>Choose a channel</option>
 			  <option id="create-channel">Create your own...</option>
 				<?php foreach(getChannelsList() as $row){
 					echo "<option>" . $row['channame'] . "</option>";
 				}?>
 			</select>
-			<input type="text" name="new-channel" class="form-control" id="new-channel-entry" placeholder="New channel here" required>
+			<input type="text" name="new-channel" class="form-control" id="new-channel-entry" placeholder="New channel here">
 			<span class='help-block' id='new-channel-message'>This channel already exists.</span>
 			<div id="private-channel-radio" class="radio-selection">
 				<br>

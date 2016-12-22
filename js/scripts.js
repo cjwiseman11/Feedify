@@ -135,11 +135,13 @@ $(document).ready(function(){
 				$('#private-channel-radio').show();
 				$('#new-channel-entry').show();
 				$('#new-channel-entry').focus();
+				$('#new-channel-entry').attr("required", "");
 			} else {
 				$('#private-channel-radio').hide();
 				$('#new-channel-entry').hide();
 				$('#new-channel-message').hide();
 				$('#new-channel-message').parent().removeClass("has-error");
+				$('#new-channel-entry').removeAttr("required");
 			}
 		});
 

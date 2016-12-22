@@ -317,16 +317,13 @@ function addToNewsfeeds($feed, $auto_site_link, $feed_title){
 
 function checkIfChannelFeedLinkExists($feed, $channel){
   $db = connectToDatabase();
+  $newsfeedid = getFeedId($feed);
+  $channelid = getChannelId($channel);
   $statement = $db->prepare("  SELECT * FROM `channelfeed-links`
-    WHERE newsfeedid = (SELECT id FROM newsfeeds WHERE rsslink= :feed)
-    AND channelid = (SELECT id FROM channels WHERE channame= :channel)");
-  $statement->execute(array(':feed' => $feed, ':channel' => $channel));
-  $result = $statement->fetchAll();
-  if($result){
-    return true;
-  } else {
-    return false;
-  }
+    WHERE newsfeedid = $newsfeedid
+    AND channelid = $channelid");
+  $statement->execute();
+  return $statement->fetchAll();
 }
 
 function addChannelFeedLink($feed, $channel){
