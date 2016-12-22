@@ -72,7 +72,7 @@
             </form>
     <?php else : ?>
         <div id="member-loggedin">
-					<p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <a href="index.php">Home</a> | <a href="your-feeds.php">Your Feeds</a> | <a href="php/logout.php">Logout</a>
+					<p>Hello <?php echo $_SESSION['feedifyusername']; ?> | <a href="index.php">Home</a> | <a href="php/logout.php">Logout</a>
 						</p>
         </div>
     <?php endif; ?>
