@@ -40,11 +40,22 @@ function getPostsByChan($chan, $limit, $offset){
 }
 
 function getFullFeedList(){
-    $db = connectToDatabase();
-    $statement = $db->prepare("select * from newsfeeds");
-    $statement->execute();
-    $row = $statement->fetchAll();
-    return $row;
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM newsfeeds");
+  $statement->execute();
+  $row = $statement->fetchAll();
+  return $row;
+}
+
+function getMemberFeedList($username){
+  $db = connectToDatabase();
+  $row = getMemberId($username);
+  $statement = $db->prepare("SELECT * FROM newsfeeds
+                              WHERE id NOT IN (SELECT feedid FROM `memberfeeds`
+                                WHERE `memberid` = :memberid)");
+  $statement->execute(array(':memberid' => $row["id"]));
+  $row = $statement->fetchAll();
+  return $row;
 }
 
 function getFeedListForChan($chan){
@@ -204,4 +215,129 @@ function removeRememberMe($username){
     $statement = $db->prepare("DELETE FROM `keeploggedin` WHERE memberid = :memberid");
     $statement->execute(array(':memberid' => $memberid["id"]));
   }
+}
+
+function getChannelsList(){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM `channels` WHERE id NOT IN (SELECT chanid FROM `memberchannels` WHERE hidden = 1) ORDER BY id ASC");
+  $statement->execute();
+  return $statement->fetchAll();
+}
+
+function getFeedsByUser($username){
+  $db = connectToDatabase();
+  $memberid = getMemberId($username);
+  $statement = $db->prepare("SELECT n.* FROM `newsfeeds` AS n
+    INNER JOIN `memberfeeds` AS k
+    ON k.feedid = n.id
+    WHERE k.memberid = :memberid
+    ORDER BY id ASC");
+  $statement->execute(array(':memberid' => $memberid["id"]));
+  return $statement->fetchAll();
+}
+
+function addToMemberFeed($feed, $user){
+  $db = connectToDatabase();
+  $row = getMemberID($user);
+  $feedid = getFeedId($feed);
+  $statement = $db->prepare("INSERT INTO `memberfeeds`(`memberid`, `feedid`) VALUES (:memberid, :feedid)");
+  $statement->execute(array(':feedid' => $feedid, ':memberid' => $row["id"]));
+}
+
+function removeFromMemberFeed($feed, $user){
+  $db = connectToDatabase();
+  $row = getMemberID($user);
+  $statement = $db->prepare("DELETE FROM `memberfeeds` WHERE `feedid`=:feedid AND `memberid`=:memberid");
+  $statement->execute(array(':feedid' => $feed, ':memberid' => $row["id"]));
+}
+
+//This could potentially replace all other GET POSTS functions but need old ones until merged
+function getPosts($username, $limit, $offset, $chan){
+  $db = connectToDatabase();
+  $row = getMemberID($username);
+  $statement = $db->prepare("SELECT c.* FROM `posts` as c
+      INNER JOIN `memberfeeds` as b
+          ON c.newsfeedid = b.feedid
+      WHERE b.memberid = :memberid
+      ORDER BY c.id DESC
+      LIMIT :limit OFFSET :offset");
+  $statement->execute(array(':memberid' => $row["id"], ':limit' => $limit, ':offset' => $offset));
+    return $statement->fetchAll();
+}
+
+function getMembersChannels($username){
+  $db = connectToDatabase();
+  $row = getMemberID($username);
+  $statement = $db->prepare("SELECT c.* FROM `channels` as c
+    INNER JOIN `memberchannels` as m
+        ON c.id = m.chanid
+      WHERE m.memberid = :memberid
+      GROUP BY c.id");
+  $statement->execute(array(':memberid' => $row["id"]));
+  return $statement->fetchAll();
+}
+
+function searchFeeds($searchvalue){
+  $db = connectToDatabase();
+  $searchvalue = "%$searchvalue%";
+  $statement = $db->prepare("SELECT * FROM `newsfeeds` WHERE `rsslink` LIKE :searchvalue");
+  $statement->execute(array(':searchvalue' => $searchvalue));
+  return $statement->fetchAll();
+}
+
+function checkNewsFeed($feed){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM newsfeeds WHERE rsslink = :feed");
+  $statement->execute(array(':feed' => $feed));
+  return $statement->fetchAll();
+}
+
+function getChannelId($channel){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT `id` FROM channels WHERE channame = :channel");
+  $statement->execute(array(':channel' => $channel));
+  $result = $statement->fetchAll();
+  return $result[0]["id"];
+}
+
+function addToMemberChannel($channel, $username, $hidden){
+  $db = connectToDatabase();
+  $statement = $db->prepare("INSERT INTO channels (channame) VALUES (:channel)");
+  $statement->execute(array(':channel' => $channel));
+  $row = getMemberID($username);
+  $statement = $db->prepare("INSERT INTO memberchannels (chanid, memberid, hidden) VALUES (:chanid, :memberid, :hidden)");
+  $statement->execute(array(':chanid' => getChannelId($channel), ':memberid' => $row["id"], ':hidden' => $hidden));
+}
+
+function addToNewsfeeds($feed, $auto_site_link, $feed_title){
+  $db = connectToDatabase();
+  $statement = $db->prepare("INSERT INTO newsfeeds (rsslink, rssSrcSite, feedtitle) VALUES (:feedlink, :sitelink, :feedtitle)");
+  $statement->execute(array(':feedlink' => $feed, ':sitelink' => $auto_site_link, ':feedtitle' => $feed_title));
+}
+
+function checkIfChannelFeedLinkExists($feed, $channel){
+  $db = connectToDatabase();
+  $newsfeedid = getFeedId($feed);
+  $channelid = getChannelId($channel);
+  $statement = $db->prepare("  SELECT * FROM `channelfeed-links`
+    WHERE newsfeedid = $newsfeedid
+    AND channelid = $channelid");
+  $statement->execute();
+  return $statement->fetchAll();
+}
+
+function addChannelFeedLink($feed, $channel){
+  $db = connectToDatabase();
+  $newsfeedid = getFeedId($feed);
+  $channelid = getChannelId($channel);
+  $statement = $db->prepare("INSERT INTO `channelfeed-links`(newsfeedid,channelid) VALUES ($newsfeedid, $channelid)");
+  $statement->execute();
+}
+
+function getFeedId($feed){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT `id` FROM `newsfeeds` WHERE rsslink = :feed");
+  $statement->execute(array(':feed' => $feed));
+  $result = $statement->fetchAll();
+  return $result[0]["id"];
 }
