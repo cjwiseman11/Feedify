@@ -31,8 +31,8 @@
 			addChannelFeedLink($feed, $channel);
 		  header("location: ../?chan=$channel");
 		} else {
-			echo "Feed already linked";
-
+			$linkerror = "linked=exists";
+			header("location: ../submit.php?error=exists&chan=$channel&feed=$feed");
 		}
 
 	} else {
