@@ -165,7 +165,7 @@ $('#randomify').click(function(){
 				<br>
 				<p>Feedify is a news aggregator where you can grab all your news in one place.</p>
         <a href="//RandomArticle" id="randomify" type="submit" class="btn btn-default">Random Article</a>
-				<a href="submit.php" id="randomify" type="submit" class="btn btn-default">Submit Feed</a>
+				<a href="submit.php?chan=<?php echo $_GET['chan'];?> " id="randomify" type="submit" class="btn btn-default">Submit Feed</a>
         <br><br>
 			</div>
 		</div>
