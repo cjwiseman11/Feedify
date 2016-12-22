@@ -133,3 +133,9 @@ a#randomify:hover {
 .exists-error{
 	color: #a94442;
 }
+
+.submit-search-rss-section {
+	background: #fff;
+	padding: 1em 0;
+	margin: 1em 0;
+}
