@@ -128,7 +128,10 @@ $(document).ready(function(){
 				}
 			});
 		});
-
+		$('#rssfeedsubmit, #channel-selector').on("change", function(){
+			$('.submit-section').removeClass("has-error");
+			$('.exists-error').remove();
+		});
 		//Channel selector
 		$('#channel-selector').on("change", function(){
 			if ($(this).val() === 'Create your own...') {
@@ -139,6 +142,7 @@ $(document).ready(function(){
 			} else {
 				$('#private-channel-radio').hide();
 				$('#new-channel-entry').hide();
+				$('#new-channel-entry').val("");
 				$('#new-channel-message').hide();
 				$('#new-channel-message').parent().removeClass("has-error");
 				$('#new-channel-entry').removeAttr("required");

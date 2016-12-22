@@ -129,3 +129,7 @@ a#randomify:hover {
 #rssresponse-helpblock, #new-channel-entry, #new-channel-message, #private-channel-radio {
 	display: none;
 }
+
+.exists-error{
+	color: #a94442;
+}
