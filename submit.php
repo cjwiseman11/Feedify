@@ -27,7 +27,7 @@
 <div id="member-login" class="text-right container">
 <?php
     if(!isset($_SESSION['feedifyusername'])): ?>
-            <form class="form-inline form-group-sm" method="post" action="php/checklogin.php?page=saved-posts.php">
+            <form class="form-inline form-group-sm" method="post" action="php/checklogin.php?page=submit.php">
                 <div class="form-group">
                     <label for="username">Name</label>
                     <input name="username" type="text" class="form-control" id="username" placeholder="Username">
@@ -51,14 +51,18 @@
 			<h1 id="home"><a href="/feedify" title="home">Feedify</a><small> Beta</small></h1>
 		</div>
 	</div>
-	<div class="row">
+	<?php
+    if(!isset($_SESSION['feedifyusername'])): ?>
+		<p>Oi Login!</p>
+		<p>Submitting feeds and creating channels is only allowed by members</p>
+  <?php else : ?>
 		<div id="feed-section" class="col-sm-12">
-      <h2><small>Submit Feeds and Create Channels</small></h2>
-      <p>Hello <?php echo $_SESSION['feedifyusername']; ?>, here you can create your very own channels for Feedify and submit news feeds to each one</p>
-      <p>You can choose to make your channel private, which will mean it won't appear in "All" or as a public channel</p>
-      <p>Below you can also find a list of feeds already found on the site, which you can add to your channels or a public channel if appropriate</p>
-      <hr>
-    </div>
+	    <h2><small>Submit Feeds and Create Channels</small></h2>
+	    <p>Hello <?php echo $_SESSION['feedifyusername']; ?>, here you can create your very own channels for Feedify and submit news feeds to each one</p>
+	    <p>You can choose to make your channel private, which will mean it won't appear in "All" or as a public channel</p>
+	    <p>Below you can also find a list of feeds already found on the site, which you can add to your channels or a public channel if appropriate</p>
+	    <hr>
+	  </div>
 		<div class="submit-search-rss-section col-sm-12">
 	    <div class="col-sm-6 submit-section <?php if($_GET['error'] == 'exists'){ echo 'has-error'; }?>">
 	      <form action="php/send_feed_channel.php" method="post" onsubmit="return sendRSS();" class="form col-sm-8">
@@ -127,7 +131,7 @@
 	      </div>
 	    </div>
 		</div>
-	</div>
+  <?php endif; ?>
 	<div class="row">
 		<div id="footer-section" class="col-sm-12">
 			<p class="text-center">Feedify &copy; 2016</p>
