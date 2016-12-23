@@ -19,30 +19,34 @@ if($searchtype == "rows"){
     echo "true";
   }
 } else if($searchtype == "rss"){
-  //Is this okay? To do.. ethically?
-  $text = file_get_contents($searchvalue);
-  $doc = new DOMDocument('1.0');
-  libxml_use_internal_errors(true);
-  $doc->loadHTML($text);
-  foreach($doc->getElementsByTagName('link') AS $link) {
-      $type = $link->getAttribute('type');
-      $final = $link->getAttribute('href');
-      if(strpos($type, 'rss') !== FALSE) {
-        $result .= "<p><a href class='result-item'>$final</a></p>";
-      } else if(strpos($type, 'atom') !== FALSE){
-        $result .= "<p><a href class='result-item'>$final</a></p>";
-      }
-  }
-  foreach($doc->getElementsByTagName('a') AS $anchor) {
-      $href = $anchor->getAttribute('href');
-      $final = $anchor->getAttribute('href');
-      if(strpos($href, '.rss') !== FALSE) {
-        $result .= "<p><a href class='result-item'>$final</a></p>";
-      } else if(strpos($href, '.atom') !== FALSE){
-        $result .= "<p><a href class='result-item'>$final</a></p>";
-      }
+
+  $text = @file_get_contents($searchvalue); //suppress warning to return no Results
+  if($text === FALSE){
+    echo "<p>Invalid URL</p>";
+  } else {
+    $doc = new DOMDocument('1.0');
+    libxml_use_internal_errors(true);
+    $doc->loadHTML($text);
+    foreach($doc->getElementsByTagName('link') AS $link) {
+        $type = $link->getAttribute('type');
+        $final = $link->getAttribute('href');
+        if(strpos($type, 'rss') !== FALSE) {
+          $result .= "<p><a href class='result-item'>$final</a></p>";
+        } else if(strpos($type, 'atom') !== FALSE){
+          $result .= "<p><a href class='result-item'>$final</a></p>";
+        }
     }
-    echo $result;
+    foreach($doc->getElementsByTagName('a') AS $anchor) {
+        $href = $anchor->getAttribute('href');
+        $final = $anchor->getAttribute('href');
+        if(strpos($href, 'rss') !== FALSE) {
+          $result .= "<p><a href class='result-item'>$final</a></p>";
+        } else if(strpos($href, 'atom') !== FALSE){
+          $result .= "<p><a href class='result-item'>$final</a></p>";
+        }
+      }
+      echo $result;
+    }
 } else if($searchtype == "channel"){
   $result = getChannelsList();
   foreach($result as $row){
