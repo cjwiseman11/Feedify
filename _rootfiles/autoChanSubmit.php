@@ -9,18 +9,8 @@ if($connection === false){
 }
 
 $feedQuery = mysqli_query($connection,"SELECT rsslink FROM `newsfeeds`");
+$similarityQuery = mysqli_query($connection, "SELECT * FROM posts WHERE (`Date` > DATE_SUB(now(), INTERVAL 1 DAY));");
 $i=0;
-
-function compareTitleSimilarities($string, $postid){
-	$similarityQuery = mysqli_query($connection, "SELECT * FROM posts WHERE (`Date` > DATE_SUB(now(), INTERVAL 1 DAY));");
-	while ($row2 = mysqli_fetch_array($similarityQuery)){
-		similar_text($string, $row2['title'], $percentage );
-		if($percentage > 50){
-			$newId = $row2['id'];
-			mysqli_query($connection,"INSERT INTO `relatedTitles`(`originalPostID`, `similarPostID`) VALUES ($postid, $newId)");
-		}
-	}
-}
 
 function createThumbnail($filepath, $thumbpath, $thumbnail_width, $thumbnail_height, $background=false) {
     echo "Creating thumbnail.../n<br>";
@@ -168,8 +158,20 @@ while ($row = mysqli_fetch_array($feedQuery)){
 			echo "No Image Found, setting to default<br>\n";
 			mysqli_query($connection,"UPDATE `posts` SET `imgSrc`='thumb_default.jpg' WHERE link = '$setLink'");
 		}
-
-		compareTitleSimilarities($upTit, $id);
+		
+		//compareTitleSimilarities($upTit, $id);
+		while ($row2 = mysqli_fetch_array($similarityQuery)){
+			echo "\n<br>Id is: " . $id;
+			echo "\n<br>Uptit is: " . $upTit;
+			similar_text($upTit, $row2['title'], $percentage );
+			echo "\n<br>% is: " . $percentage;
+			if($percentage > 50){
+				$newId = $row2['id'];
+				if($newId != $id){
+					mysqli_query($connection,"INSERT INTO `relatedTitles`(`originalPostID`, `similarPostID`) VALUES ($id, $newId)");
+				}
+			}
+		}
 		
 		if (!$result)
 		  {
