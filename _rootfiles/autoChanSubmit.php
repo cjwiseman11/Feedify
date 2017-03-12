@@ -11,6 +11,17 @@ if($connection === false){
 $feedQuery = mysqli_query($connection,"SELECT rsslink FROM `newsfeeds`");
 $i=0;
 
+function compareTitleSimilarities($string, $postid){
+	$similarityQuery = mysqli_query($connection, "SELECT * FROM posts WHERE (`Date` > DATE_SUB(now(), INTERVAL 1 DAY));");
+	while ($row2 = mysqli_fetch_array($similarityQuery)){
+		similar_text($string, $row2['title'], $percentage );
+		if($percentage > 50){
+			$newId = $row2['id'];
+			mysqli_query($connection,"INSERT INTO `relatedTitles`(`originalPostID`, `similarPostID`) VALUES ($postid, $newId)");
+		}
+	}
+}
+
 function createThumbnail($filepath, $thumbpath, $thumbnail_width, $thumbnail_height, $background=false) {
     echo "Creating thumbnail.../n<br>";
     list($original_width, $original_height, $original_type) = getimagesize($filepath);
@@ -112,6 +123,7 @@ while ($row = mysqli_fetch_array($feedQuery)){
 			$ogImage = $rmetas[i]['og:image'];
 			print "found data<br>\n";
 		}
+
 		$channelquery = "select channels from newsfeeds where rsslink = '$feed'";
 		$channelresult = mysqli_query($connection, $channelquery) or die("Error in Selecting " . mysqli_error($connection));
 		while ($row = mysqli_fetch_array($channelresult)){
@@ -156,6 +168,8 @@ while ($row = mysqli_fetch_array($feedQuery)){
 			echo "No Image Found, setting to default<br>\n";
 			mysqli_query($connection,"UPDATE `posts` SET `imgSrc`='thumb_default.jpg' WHERE link = '$setLink'");
 		}
+
+		compareTitleSimilarities($upTit, $id);
 		
 		if (!$result)
 		  {
