@@ -341,3 +341,11 @@ function getFeedId($feed){
   $result = $statement->fetchAll();
   return $result[0]["id"];
 }
+
+function getSimilarPosts($id){
+  $db = connectToDatabase();
+  $statement = $db->prepare("SELECT * FROM `relatedTitles` WHERE originalPostID = :id");
+  $statement->execute(array(':id' => $id));
+  $result = $statement->fetchAll();
+  return $result;
+}
