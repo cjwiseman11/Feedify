@@ -178,7 +178,7 @@ while ($row = mysqli_fetch_array($feedQuery)){
 			if($percentage > 50){
 				$newId = $row2['id'];
 				if($newId != $id){
-					mysqli_query($connection,"INSERT INTO `relatedTitles`(`originalPostID`, `similarPostID`) VALUES ($id, $newId)");
+					mysqli_query($connection,"INSERT INTO `relatedTitles`(`originalPostID`, `similarPostID`, `percent`) VALUES ($id, $newId,$percentage)");
 				}
 			}
 		}
