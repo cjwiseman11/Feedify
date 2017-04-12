@@ -1,12 +1,8 @@
 <?php
-    $limit = 10;
-    $offset = 1;
-    $results = getPostsByAll($limit, $offset);
+    include "statements/querystring-reader.php";
+    $offset = 0;
+    $results = getPostsByAll($lim, $offset);
     foreach($results as $row) {
-        $checkTime = strtotime();
-        $postTime = strtotime($row['date']);
-        $diff = $checkTime - $postTime;
-        echo $diff;
         include "templates/post.php"; //is this shit?
     }
 ?>

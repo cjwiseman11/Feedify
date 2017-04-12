@@ -8,13 +8,9 @@
         </div>
         <div class="media-content">
         <div class="content">
-            <p>
-            <strong><?php echo $row['title']?></strong> <small><?php echo $row['date'] ?></small>
-            <br>
-            <?php echo $row['metDesc']; ?>
-            <br>
-            <small><?php echo $row['feedsrc'] ?></small>
-            </p>
+            <p><strong><?php echo $row['title']?></strong></p>
+            <p><?php echo $row['metDesc']; ?><p>
+            <p><small><?php echo $row['feedsrc'] ?> | <?php echo $row['date'] ?> </small></p>
         </div>
         <nav class="level is-mobile">
             <div class="level-left">

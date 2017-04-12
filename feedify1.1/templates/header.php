@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
     <link href="css/bulma.css" rel="stylesheet">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript" src="js/feedifyQueryString.js"></script>
 </head>
 <body>
     <nav class="nav">
@@ -41,18 +42,26 @@
 
         <!-- This "nav-menu" is hidden on mobile -->
         <!-- Add the modifier "is-active" to display it on mobile -->
-        <div class="nav-right nav-menu">
-            <a class="nav-item">
-            Home
-            </a>
-            <a class="nav-item">
-            Saved Posts
-            </a>
+        <?php if(!isset($_SESSION['feedifyusername'])): ?>
+            <div class="nav-right nav-menu">
+                <a class="nav-item">
+                Home
+                </a>
+                <a class="nav-item">
+                Saved Posts
+                </a>
+                <span class="nav-item">
+                <a class="button is-primary">
+                    <span>Submit Feed</span>
+                </a>
+                </span>
+            </div>
+        <?php else : ?>
             <span class="nav-item">
-            <a class="button is-primary">
-                <span>Submit Feed</span>
-            </a>
+                <a class="button is-primary">
+                    <span>Log in</span>
+                </a>
             </span>
-        </div>
+        <?php endif; ?>
     </nav>
     <div class="container">
