@@ -1,5 +1,4 @@
-  
-  <div class="box">
+<div class="box">
     <article class="media">
         <div class="media-left">
         <figure class="image is-64x64">
@@ -8,7 +7,7 @@
         </div>
         <div class="media-content">
         <div class="content">
-            <p><strong><?php echo $row['title']?></strong></p>
+            <p><strong><a href="<?php echo $row['link']?>"><?php echo $row['title']?></a></strong></p>
             <p><?php echo $row['metDesc']; ?><p>
             <p><small><?php echo $row['feedsrc'] ?> | <?php echo $row['date'] ?> </small></p>
         </div>
@@ -27,4 +26,4 @@
         </nav>
         </div>
     </article>
-    </div>
+</div>

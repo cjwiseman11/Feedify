@@ -1,5 +1,5 @@
 <?php   
-    $offset = 0;
+    $offset = $page - 1;
     $results = getPostsByAll($lim, $offset);
 
     foreach($results as $row) {

@@ -4,12 +4,9 @@ if(isset($_COOKIE['rememberme'])){
 }
 include 'statements/querystring-reader.php';
 
-include "templates/header.php";
-include "templates/pagination.php";
+include "templates/header.php"; //nav, hero and <head>
 include "templates/controlbox.php";
-
-include "statements/create-posts.php";
-
+include "templates/postcontainer.php";
 include "templates/pagination.php";
 include "templates/footer.php";
 ?>

@@ -13,7 +13,7 @@
     <script type="text/javascript" src="js/feedifyQueryString.js"></script>
 </head>
 <body>
-    <nav class="nav">
+      <nav class="nav">
         <div class="nav-left">
             <a class="nav-item">
               <p><a href="/feedify" title="home" id="home">Feedify</a></p>
@@ -64,4 +64,3 @@
             </span>
         <?php endif; ?>
     </nav>
-    <div class="container">
