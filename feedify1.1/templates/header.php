@@ -15,9 +15,7 @@
 <body>
       <nav class="nav">
         <div class="nav-left">
-            <a class="nav-item">
-              <p><a href="/feedify" title="home" id="home">Feedify</a></p>
-            </a>
+            <a href="/feedify" title="home" id="home" class="nav-item">Feedify</a>
         </div>
         <div class="nav-center">
             <a class="nav-item">
