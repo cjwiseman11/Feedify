@@ -2,11 +2,14 @@
 if(isset($_COOKIE['rememberme'])){
     $_SESSION["feedifyusername"] = checkrememberme();
 }
-//include 'php/getQueryStringParams.php';
+include 'statements/querystring-reader.php';
+
 include "templates/header.php";
+include "templates/pagination.php";
 include "templates/controlbox.php";
 
 include "statements/create-posts.php";
 
+include "templates/pagination.php";
 include "templates/footer.php";
 ?>
