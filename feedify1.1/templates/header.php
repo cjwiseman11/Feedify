@@ -65,6 +65,14 @@
                     </div>
                 </span>
                 <span>
+                    <div class="field">
+                        <p class="control">
+                            <label class="checkbox">
+                            <input name="rememberme" type="checkbox">Remember me</label>
+                        </p>
+                    </div>
+                </span>
+                <span>
                     <button type="submit" class="button is-primary">Login</button>
                 </span>
             </form>
