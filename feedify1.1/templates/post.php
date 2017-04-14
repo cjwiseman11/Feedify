@@ -1,8 +1,8 @@
 <div class="box">
     <article class="media">
         <div class="media-left">
-        <figure class="image is-64x64">
-            <img src="thumbnails/<?php echo $row['imgSrc']; ?>" alt="Image">
+        <figure class="image is-128x128">
+            <img src="<?php echo "https://peppertech.co.uk/feedify/thumbnails/" . $row['imgSrc']; ?>" alt="Image">
         </figure>
         </div>
         <div class="media-content">

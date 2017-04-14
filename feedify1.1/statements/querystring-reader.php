@@ -1,4 +1,5 @@
 <?php
+
     //Get current channel and save into variable
     if($_GET['chan']){
         $chan = $_GET['chan'];

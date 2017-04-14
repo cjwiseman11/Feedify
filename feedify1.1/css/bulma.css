@@ -5,8 +5,20 @@
     font-size: 1.6em;
 }
 
+.channels {
+  margin-bottom: 1em;
+}
+
+.channelbtn {
+  margin-top: 0.3em;
+}
+
 .pagination {
   margin: 1em 0;
+}
+
+.field {
+  margin-right: 1em;
 }
 /*End Custom*/
 
@@ -609,7 +621,7 @@ table th {
 }
 
 .box {
-  background-color: white;
+  background-color: #f6f6f6;
   border-radius: 5px;
   box-shadow: 0 2px 3px rgba(10, 10, 10, 0.1), 0 0 0 1px rgba(10, 10, 10, 0.1);
   display: block;
@@ -3176,7 +3188,7 @@ input[type="submit"].button {
 }
 
 .media-left {
-  margin-right: 1rem;
+  margin-right: 3rem;
 }
 
 .media-right {
@@ -3688,6 +3700,10 @@ input[type="submit"].button {
   height: 3.25rem;
   position: relative;
   width: 3.25rem;
+}
+
+.nav-toggle p {
+  margin-top: 25%;
 }
 
 .nav-toggle span {

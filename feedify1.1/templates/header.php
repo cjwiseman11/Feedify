@@ -11,6 +11,7 @@
     <link href="css/bulma.css" rel="stylesheet">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/feedifyQueryString.js"></script>
+    <script type="text/javascript" src="js/scripts.js"></script>
 </head>
 <body>
       <nav class="nav">
@@ -29,36 +30,44 @@
             </span>
             </a>
         </div>
-
-        <!-- This "nav-toggle" hamburger menu is only visible on mobile -->
-        <!-- You need JavaScript to toggle the "is-active" class on "nav-menu" -->
+        <?php if(isset($_SESSION['feedifyusername'])): ?>
         <span class="nav-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
+            <p>Menu</p>
         </span>
-
-        <!-- This "nav-menu" is hidden on mobile -->
-        <!-- Add the modifier "is-active" to display it on mobile -->
-        <?php if(!isset($_SESSION['feedifyusername'])): ?>
-            <div class="nav-right nav-menu">
-                <a class="nav-item">
-                Home
-                </a>
-                <a class="nav-item">
-                Saved Posts
-                </a>
-                <span class="nav-item">
-                <a class="button is-primary">
+        <div class="nav-right nav-menu">
+            <a href="?c=home" class="nav-item">Home</a>
+            <a href="?c=savedposts" class="nav-item">Saved Posts</a>
+            <a href="statements/logout.php" class="nav-item">Logout</a>
+            <span class="nav-item">
+                <a href="?c=feeds" class="button is-primary">
                     <span>Submit Feed</span>
                 </a>
-                </span>
-            </div>
-        <?php else : ?>
-            <span class="nav-item">
-                <a class="button is-primary">
-                    <span>Log in</span>
-                </a>
             </span>
+        </div>
+        <?php else : ?>
+        <span class="nav-toggle">
+            <p>Log in</p>
+        </span>
+        <div class="nav-right nav-menu">
+            <form class="nav-item" method="post" action="statements/checklogin.php">
+                <span>
+                    <div class="field">
+                        <p class="control">
+                            <input name="username" class="input username" type="text" placeholder="Username">
+                        </p>
+                    </div>
+                </span>
+                <span>
+                    <div class="field">
+                        <p class="control">
+                            <input name="password" class="input password" type="password" placeholder="Password"> 
+                        </p>
+                    </div>
+                </span>
+                <span>
+                    <button type="submit" class="button is-primary">Login</button>
+                </span>
+            </form>
+        </div>
         <?php endif; ?>
     </nav>
