@@ -68,7 +68,7 @@
 					echo "<div class='exists-error'><p><strong>This feed already exists in this channel</strong></p></div>";
 				}?>
 	      <input type="submit" class="button is-primary">
-	      <div class="alert alert-danger col-sm-12 hide" role="alert">
+	      <div class="notification is-danger col-sm-12 hide" role="alert">
 	      <p>You must submit an RSS feed.</p>
 	      </div>
 	      </form>

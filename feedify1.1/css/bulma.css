@@ -1,4 +1,7 @@
 /*Custom Styles*/
+.hide{
+  display: none;
+}
 #rssresponse-helpblock, #new-channel-entry, #new-channel-message, #private-channel-radio {
 	display: none;
 }
