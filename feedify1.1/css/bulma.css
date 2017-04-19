@@ -1,4 +1,18 @@
 /*Custom Styles*/
+#rssresponse-helpblock, #new-channel-entry, #new-channel-message, #private-channel-radio {
+	display: none;
+}
+
+.exists-error{
+	color: #a94442;
+}
+
+.submit-search-rss-section {
+	background: #fff;
+	padding: 1em 0;
+	margin: 1em 0;
+}
+
 #home, #home a, #home a:hover {
     color: #00b1c1;
     font-family: 'Comfortaa', cursive;
@@ -49,6 +63,7 @@
 .footer{
   text-align: center;
 }
+
 /*End Custom*/
 
 /*! bulma.io v0.4.0 | MIT License | github.com/jgthms/bulma */
