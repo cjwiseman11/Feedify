@@ -4,6 +4,7 @@
 		<p>Oi Login!</p>
 		<p>Submitting feeds and creating channels is only allowed by members</p>
   <?php else : ?>
+      <script type="text/javascript" src="js/rssreaderscript.js"></script>
 		<div id="feed-section" class="col-sm-12">
 	    <h2><small>Submit Feeds and Create Channels</small></h2>
 	    <p>Hello <?php echo $_SESSION['feedifyusername']; ?>, here you can create your very own channels for Feedify and submit news feeds to each one</p>
@@ -13,7 +14,7 @@
 	  </div>
 		<div class="submit-search-rss-section col-sm-12">
 	    <div class="col-sm-6 submit-section <?php if($_GET['error'] == 'exists'){ echo 'has-error'; }?>">
-	      <form action="php/send_feed_channel.php" method="post" onsubmit="return sendRSS();" class="form col-sm-8">
+	      <form action="statements/send_feed_channel.php" method="post" onsubmit="return sendRSS();" class="form col-sm-8">
 	      <div class="form-group">
 	        <label class="control-label" for="feed_link">Please input a full RSS Link including HTTP, or <a href="#search-area" id="search-area-link">use the search area</a></label>
 	        <input type="text" value="<?php echo $_GET['feed']; ?>" name="feed_link" class="form-control" id="rssfeedsubmit" placeholder="RSS URL" required>

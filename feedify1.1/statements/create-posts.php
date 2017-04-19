@@ -3,7 +3,7 @@
     if($_GET['c'] == "savedposts"){
         $results = getSavedPosts($_SESSION['feedifyusername']);
     } else {
-        $offset = $page - 1;
+        $offset = ($page - 1) * $lim;
         if($chan == "all"){
             $results = getPostsByAll($lim, $offset);
         } else {

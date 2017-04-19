@@ -16,7 +16,7 @@
 <body>
       <nav class="nav">
         <div class="nav-left">
-            <a href="/feedify" title="home" id="home" class="nav-item">Feedify</a>
+            <a href="?chan=all" title="home" id="home" class="nav-item">Feedify</a>
         </div>
         <div class="nav-center">
             <a class="nav-item">
