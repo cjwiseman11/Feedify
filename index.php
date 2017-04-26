@@ -2,8 +2,9 @@
 if(isset($_COOKIE['rememberme'])){
     $_SESSION["feedifyusername"] = checkrememberme();
 	}
+include 'php/getQueryStringParams.php';
 ?>
-<!doctype php>
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -27,26 +28,6 @@ if(isset($_COOKIE['rememberme'])){
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript" src="js/feedifyQueryString.js"></script>
 	<script>
-	<?php
-		//Get current channel and save into variable
-        if($_GET['chan']){
-            $chan = $_GET['chan'];
-        } else {
-            $chan = "all";
-        }
-
-        if($_GET['lim']){
-            $lim = $_GET['lim'];
-        } else {
-            $lim = "10";
-        }
-
-        if($_GET['p']){
-            $page = $_GET['p'];
-        } else {
-            $page = "1";
-        }
-	?>
 
         //Random Button Logic
 $('#randomify').click(function(){

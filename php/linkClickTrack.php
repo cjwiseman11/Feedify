@@ -11,7 +11,7 @@
 
 	$link = $_GET['link'];
 	echo "$link";
-	mysqli_query($connection,"UPDATE `posts` SET `vote`= vote+1 WHERE `link` = '$link'") or die("Error in Selecting " . mysqli_error($connection));
+	mysqli_query($connection,"UPDATE `posts` SET `views`= views+1 WHERE `link` = '$link'") or die("Error in Selecting " . mysqli_error($connection));
 	//header("Location: $link");
 
 	//close the db connection

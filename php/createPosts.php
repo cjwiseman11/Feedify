@@ -56,6 +56,13 @@ foreach($row as $row)
       $savedPostCode = '<a href="" class="save-for-later">Save for later</a> | ';
     }
 
+    $relatedrow = getSimilarPosts($row["id"]);
+    $relatedCode = ""; 
+    foreach($relatedrow as $relatedrow){
+        $similarPost = getPostsById($relatedrow["similarPostID"]);
+        $relatedCode = $relatedCode . "<a href='" . $similarPost[0]["link"] . "'>" .$similarPost[0]["title"] . "</a> | ";
+    }
+
 	echo '<div id="'. $row["id"] .'" class="article-container container-fluid row-center dont-break-out row">
 			<div class="image col-sm-2 col-xs-12">
 			' . $imgcode . '
@@ -77,6 +84,9 @@ foreach($row as $row)
 			<div class="social">
 				' .$savedPostCode. '<a href=" ' . $row["link"] . '" data-image="'. $row["imgSrc"] .'" data-title="'. $row["title"] .'" data-desc="'. $row["metDesc"] .'" class="btnShare">Share</a>' . $redditcode . '
 			</div>
+            <div class="similar-posts">
+                '.$relatedCode.'
+            </div>
 		</div>
 	</div>';
 }

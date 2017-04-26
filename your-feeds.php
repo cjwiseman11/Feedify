@@ -1,5 +1,5 @@
-<?php if (substr_count($_SERVER[‘HTTP_ACCEPT_ENCODING’], ‘gzip’)) ob_start(“ob_gzhandler”); else ob_start(); session_start(); include_once 'php/slq-statements.php';?>
-<!doctype php>
+<?php if (substr_count($_SERVER[‘HTTP_ACCEPT_ENCODING’], ‘gzip’)) ob_start(“ob_gzhandler”); else ob_start(); session_start(); include_once 'php/slq-statements.php';include 'php/getQueryStringParams.php';?>
+<!doctype html>
 <html lang="en">
 <head>
 	<meta charset="utf-8">
@@ -54,26 +54,6 @@
        });
     }
     </script>
-		<?php
-			//Get current channel and save into variable
-					if($_GET['chan']){
-							$chan = $_GET['chan'];
-					} else {
-							$chan = "all";
-					}
-
-					if($_GET['lim']){
-							$lim = $_GET['lim'];
-					} else {
-							$lim = "10";
-					}
-
-					if($_GET['p']){
-							$page = $_GET['p'];
-					} else {
-							$page = "1";
-					}
-		?>
   </head>
 <body>
 <div id="member-login" class="text-right container">
