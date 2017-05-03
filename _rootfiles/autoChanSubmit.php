@@ -3,7 +3,7 @@ ini_set('user_agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:16.0) Gecko/201001
 $config = parse_ini_file('config.ini'); 
 
 //Connecting to sql db.
-$connection = mysqli_connect("localhost",$config['username'],$config['password'],$config['dbname']);
+$connection = mysqli_connect("10.169.0.142",$config['username'],$config['password'],$config['dbname']);
 if($connection === false){
 	//TODO: Add error
 }
@@ -71,7 +71,7 @@ while ($row = mysqli_fetch_array($feedQuery)){
 	$feedstring = $row['rsslink'];
 	$feed = mysqli_real_escape_string($connection, $feedstring);
 	print "$feed<br>\n";
-	$feed_to_array = simplexml_load_file($feed);
+	$feed_to_array = @simplexml_load_file($feed);
 	
 	if (strpos($feedstring, 'reddit.com') !== false || strpos($feedstring, 'youtube.com') !== false ) {
 		$autoLink = $feed_to_array->entry->link['href'];
@@ -153,15 +153,16 @@ while ($row = mysqli_fetch_array($feedQuery)){
 			$getIdQuery = mysqli_query($connection,"SELECT id FROM `posts` WHERE link = '$setLink'");
 			while($row = mysqli_fetch_assoc($getIdQuery)){
                 $imageName = "thumb_" . $row["id"] . $ext;
-				$imageSrc = __DIR__ . "/public_html/feedify/thumbnails/full/" . $imageName;
+				$imageSrc = "/var/sites/p/peppertech.co.uk/public_html/feedify/thumbnails/full/" . $imageName;
 				$id = $row["id"];
 				copy($ogImage, $imageSrc);
 			}
 			//$imgSrcRelative = "thumbnails/full/" . $imageName; //THis is not needed now cause saving just imagename
+			$test = __DIR__;
 			mysqli_query($connection,"UPDATE `posts` SET `imgSrc`='$imageName' WHERE link = '$setLink'");
 			echo "Image added:" . $imgSrcRelative;
 			echo "<br>\n";
-            createThumbnail($imageSrc, __DIR__ . "/public_html/feedify/thumbnails/" . $imageName, "300", "164", $background=false);
+            createThumbnail($imageSrc, "/var/sites/p/peppertech.co.uk/public_html/feedify/thumbnails/" . $imageName, "300", "164", $background=false);
 		} else {
 			echo "No Image Found, setting to default<br>\n";
 			mysqli_query($connection,"UPDATE `posts` SET `imgSrc`='thumb_default.jpg' WHERE link = '$setLink'");
