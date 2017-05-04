@@ -5,7 +5,7 @@ function connectToDatabase(){
     $user = $config['username'];
     $pass = $config['password'];
     $dbname = $config['dbname'];
-    $db = new PDO("mysql:host=localhost;dbname=$dbname",$user,$pass);
+    $db = new PDO("mysql:host=10.169.0.142;dbname=$dbname",$user,$pass);
     $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
     return $db;
 }
