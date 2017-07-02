@@ -1,4 +1,4 @@
-<div class="post-container box">
+<div class="post-container box dont-break-out">
     <div class="columns">
         <div class="column is-3-desktop is-4-tablet ">
             <div class="media-left">
